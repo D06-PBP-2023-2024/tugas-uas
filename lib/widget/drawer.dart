@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_uas/screen/user_profile.dart';
+import 'package:tugas_uas/screen/home.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
@@ -13,23 +15,35 @@ class SideDrawer extends StatelessWidget {
               color: Colors.blue,
             ),
             child: Text(
-              "Drawer Header",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
+              "KindleKids",
+              textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                ),
             ),
           ),
           ListTile(
-            title: const Text("Item 1"),
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Home'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Home(),
+                  ));
             },
           ),
           ListTile(
-            title: const Text("Item 2"),
+            leading: const Icon(Icons.account_circle_outlined),
+            title: const Text('Profile'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Profile(),
+                  ));
             },
           ),
         ],
