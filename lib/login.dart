@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // Make sure to import your main.dart
+import 'package:tugas_uas/screen/home.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -56,7 +57,7 @@ class LoginPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Flutter Demo Home Page')),
+                  MaterialPageRoute(builder: (context) => const Home()),
                 );
               },
               child: const Text('Next'),
