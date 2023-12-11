@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_uas/screen/readingforum_page.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
@@ -30,6 +31,17 @@ class SideDrawer extends StatelessWidget {
             title: const Text("Item 2"),
             onTap: () {
               Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text("Reading Forum"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReadingForumPage(),
+                ),
+              );
             },
           ),
           ListTile(
