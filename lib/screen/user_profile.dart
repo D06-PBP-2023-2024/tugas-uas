@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_uas/widget/drawer.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -7,6 +8,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        drawer: const SideDrawer(),
         body: Column(
           children: <Widget>[
             const Expanded(

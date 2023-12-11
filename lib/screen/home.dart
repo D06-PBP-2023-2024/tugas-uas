@@ -69,30 +69,10 @@ class _HomeState extends State<Home> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   padding: const EdgeInsets.all(20.0),
-                  // child: Column(
-                  //   mainAxisAlignment: MainAxisAlignment.start,
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Text(
-                  //       (snapshot.data![index].fields?.title ??
-                  //               "loh kok ga ada")
-                  //           .toTitleCase(),
-                  //       style: const TextStyle(
-                  //         fontSize: 18.0,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //     const SizedBox(height: 10),
-                  //     Text(snapshot.data![index].fields?.downloadCount
-                  //             ?.toString() ??
-                  //         "NaN"),
-                  //     const SizedBox(height: 10),
-                  //   ],
-                  // ),
-                  // use card
                   child: Card(
                     child: Column(
                       children: [
+                        Image.network(snapshot.data![index].fields!.coverUrl!),
                         ListTile(
                           title: Text(
                             (snapshot.data![index].fields?.title ??
@@ -102,6 +82,7 @@ class _HomeState extends State<Home> {
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                           // subtitle: Text(snapshot.data![index].fields?.author ??
                           // "Tidak ada penulis"),
