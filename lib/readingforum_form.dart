@@ -29,7 +29,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       drawer: const SideDrawer(),
@@ -101,12 +101,12 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.orange),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.postJson(
-                          "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/",
+                          "http://127.0.0.1:8000/",
                           jsonEncode(<String, String>{
                             'title': _title,
                             'content': _content,

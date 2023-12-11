@@ -12,7 +12,7 @@ class ReadingForumPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discussion Detail'),
+        title: Text('Discussion List'),
       ),
       body: ListView(
         padding: EdgeInsets.all(8.0),
