@@ -17,7 +17,6 @@ class ReadingForumPage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(8.0),
         children: [
-          
           // Baris untuk navigasi ke ReadingForumFormPage
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -44,7 +43,8 @@ class ReadingForumPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ReadingForumDetailPage(discussion: discussion!),
+                      builder: (context) =>
+                          ReadingForumDetailPage(discussion: discussion!),
                     ),
                   );
                 },
@@ -60,19 +60,18 @@ class ReadingForumPage extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Navigasi ke halaman ReadingForumDetailPage sesuai dengan diskusi yang diklik
-       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            if (discussion != null) {
-              return ReadingForumDetailPage(discussion: discussion!);
-            } else {
-                return Container(); 
-            }
-          },
-        ),
-      );
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              if (discussion != null) {
+                return ReadingForumDetailPage(discussion: discussion!);
+              } else {
+                return Container();
+              }
+            },
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),

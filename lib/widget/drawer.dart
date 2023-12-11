@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_uas/screen/user_profile.dart';
+import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/readingforum_page.dart';
 
 class SideDrawer extends StatelessWidget {
@@ -14,23 +16,52 @@ class SideDrawer extends StatelessWidget {
               color: Colors.blue,
             ),
             child: Text(
-              "Drawer Header",
+              "KindleKids",
+              textAlign: TextAlign.center,
               style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
                 color: Colors.white,
-                fontSize: 24,
               ),
             ),
           ),
           ListTile(
-            title: const Text("Item 1"),
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Home(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.account_circle_outlined),
+            title: const Text('Profile'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Profile(),
+                  ));
+            },
+          ),
+          ListTile(
+            title: const Text("Log Out"),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text("Item 2"),
+            title: const Text("Reading Forum"),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReadingForumPage(),
+                ),
+              );
             },
           ),
           ListTile(
