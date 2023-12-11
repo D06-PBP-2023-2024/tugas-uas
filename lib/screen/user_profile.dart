@@ -61,7 +61,7 @@ class Profile extends StatelessWidget {
                                     context,
                                     listen: false);
                                 final response = await request.logout(
-                                    "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                                    "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
                                 String message = response["message"];
                                 if (response['status']) {
                                   String uname = response["username"];
