@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.purple, Colors.blue],
+              colors: [Colors.white, Colors.blue],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -60,74 +60,87 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  labelStyle: TextStyle(color: Colors.white),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+              Center(
+                child: Text(
+                  'Kindle Kids',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-                style: TextStyle(color: Colors.white),
               ),
-              const SizedBox(height: 12.0),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                obscureText: true,
-                style: TextStyle(color: Colors.white),
-              ),
-              const SizedBox(height: 24.0),
-              ElevatedButton(
-                onPressed: () async {
-                  String username = _usernameController.text;
-                  String password = _passwordController.text;
-
-                  final response = await request.login("http://127.0.0.1:8080/auth/login/", {
-                    'username': username,
-                    'password': password,
-                  });
-
-                  if (request.loggedIn) {
-                    String message = response['message'];
-                    String uname = response['username'];
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        SnackBar(content: Text("$message Selamat datang, $uname.")));
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Login Gagal'),
-                        content: Text(response['message']),
-                        actions: [
-                          TextButton(
-                            child: const Text('OK'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                        ),
                       ),
-                    );
-                  }
-                },
-                child: const Text('Login'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
+                      const SizedBox(height: 12.0),
+                      TextField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                        ),
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 24.0),
+                      ElevatedButton(
+                        onPressed: () async {
+                          String username = _usernameController.text;
+                          String password = _passwordController.text;
+
+                          final response = await request.login("http://127.0.0.1:8080/auth/login/", {
+                            'username': username,
+                            'password': password,
+                          });
+
+                          if (request.loggedIn) {
+                            String message = response['message'];
+                            String uname = response['username'];
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Home()),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(
+                                SnackBar(content: Text("$message Selamat datang, $uname.")));
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Login Gagal'),
+                                content: Text(response['message']),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Login'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          onPrimary: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
