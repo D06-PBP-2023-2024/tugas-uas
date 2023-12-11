@@ -22,8 +22,10 @@ class Profile extends StatelessWidget {
                   children: <Widget>[
                     Text('Welcome!', style: TextStyle(fontSize: 24)),
                     SizedBox(height: 10),
-                    Text('First Name Last Name', style: TextStyle(fontSize: 18)),
-                    Text('Username', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    Text('First Name Last Name',
+                        style: TextStyle(fontSize: 18)),
+                    Text('Username',
+                        style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ],
                 ),
               ),
@@ -38,7 +40,8 @@ class Profile extends StatelessWidget {
                     children: <Widget>[
                       const InfoRow(title: 'Email', value: 'email'),
                       const Divider(),
-                      const InfoRow(title: 'Phone number', value: 'phone number'),
+                      const InfoRow(
+                          title: 'Phone number', value: 'phone number'),
                       const Divider(),
                       const InfoRow(title: 'Domicile', value: 'domicile'),
                       const Spacer(),
@@ -46,34 +49,37 @@ class Profile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           ElevatedButton(
-                            onPressed: () {}, 
-                            child: const Text('Update Profile')
-                          ),
+                              onPressed: () {},
+                              child: const Text('Update Profile')),
                           const SizedBox(width: 10),
                           ElevatedButton(
-                            onPressed: () async {
-                              final request = Provider.of<CookieRequest>(context, listen: false);
-                              final response = await request.logout(
-                                "http://127.0.0.1:8080/auth/logout/"
-                              );
-                              String message = response["message"];
-                              if (response['status']) {
-                                String uname = response["username"];
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text("$message Sampai jumpa, $uname."),
-                                ));
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const LoginApp()),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text("$message"),
-                                ));
-                              }
-                            }, 
-                            child: const Text('Log Out')
-                          ),
+                              onPressed: () async {
+                                final request = Provider.of<CookieRequest>(
+                                    context,
+                                    listen: false);
+                                final response = await request.logout(
+                                    "http://127.0.0.1:8080/auth/logout/");
+                                String message = response["message"];
+                                if (response['status']) {
+                                  String uname = response["username"];
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content:
+                                        Text("$message Sampai jumpa, $uname."),
+                                  ));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const LoginApp()),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("$message"),
+                                  ));
+                                }
+                              },
+                              child: const Text('Log Out')),
                         ],
                       ),
                     ],
@@ -146,7 +152,8 @@ class InfoRow extends StatelessWidget {
         ),
         Expanded(
           flex: 2,
-          child: Text(value, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+          child: Text(value,
+              style: const TextStyle(fontSize: 16, color: Colors.grey)),
         ),
       ],
     );
