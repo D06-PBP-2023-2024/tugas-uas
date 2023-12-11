@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:tugas_uas/widget/drawer.dart";
 import "package:tugas_uas/model/book.dart";
 import "package:http/http.dart" as http;
+import 'package:tugas_uas/utils/titlecase.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -68,21 +69,45 @@ class _HomeState extends State<Home> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        snapshot.data![index].fields.title,
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
+                  // child: Column(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       (snapshot.data![index].fields?.title ??
+                  //               "loh kok ga ada")
+                  //           .toTitleCase(),
+                  //       style: const TextStyle(
+                  //         fontSize: 18.0,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //     const SizedBox(height: 10),
+                  //     Text(snapshot.data![index].fields?.downloadCount
+                  //             ?.toString() ??
+                  //         "NaN"),
+                  //     const SizedBox(height: 10),
+                  //   ],
+                  // ),
+                  // use card
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            (snapshot.data![index].fields?.title ??
+                                    "loh kok ga ada")
+                                .toTitleCase(),
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          // subtitle: Text(snapshot.data![index].fields?.author ??
+                          // "Tidak ada penulis"),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.downloadCount}"),
-                      const SizedBox(height: 10),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
