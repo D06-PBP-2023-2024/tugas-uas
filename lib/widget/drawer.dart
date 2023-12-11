@@ -70,6 +70,12 @@ class SideDrawer extends StatelessWidget {
                   ));
             },
           ),
+          ListTile(
+            title: const Text("Log Out"),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
     );
