@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_uas/model/reading_forum.dart';
 
-
 class ReadingForumDetailPage extends StatelessWidget {
   final Discussion discussion;
 
   ReadingForumDetailPage({required this.discussion});
 
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
