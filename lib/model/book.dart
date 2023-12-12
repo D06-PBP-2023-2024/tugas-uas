@@ -11,14 +11,14 @@ String bookToJson(List<Book> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Book {
-  String model;
-  int pk;
-  Fields fields;
+  String? model;
+  int? pk;
+  Fields? fields;
 
   Book({
-    required this.model,
-    required this.pk,
-    required this.fields,
+    this.model,
+    this.pk,
+    this.fields,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
@@ -30,25 +30,25 @@ class Book {
   Map<String, dynamic> toJson() => {
         "model": model,
         "pk": pk,
-        "fields": fields.toJson(),
+        "fields": fields!.toJson(),
       };
 }
 
 class Fields {
-  String title;
-  int author;
-  String coverUrl;
-  int downloadCount;
-  String content;
-  List<int> tags;
+  String? title;
+  int? author;
+  String? coverUrl;
+  int? downloadCount;
+  String? content;
+  List<int>? tags;
 
   Fields({
-    required this.title,
-    required this.author,
-    required this.coverUrl,
-    required this.downloadCount,
-    required this.content,
-    required this.tags,
+    this.title,
+    this.author,
+    this.coverUrl,
+    this.downloadCount,
+    this.content,
+    this.tags,
   });
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
@@ -66,6 +66,6 @@ class Fields {
         "cover_url": coverUrl,
         "download_count": downloadCount,
         "content": content,
-        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "tags": List<dynamic>.from(tags!.map((x) => x)),
       };
 }

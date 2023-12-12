@@ -23,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<List<Profile>> fetchProduct() async {
+    // TODO ganti URL broo
     var url = Uri.parse('http://127.0.0.1:8000/user/json/');
     var response = await http.get(
       url,
