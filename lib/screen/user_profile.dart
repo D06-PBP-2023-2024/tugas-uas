@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:tugas_uas/widget/drawer.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:tugas_uas/widget/drawer.dart';
 import 'package:tugas_uas/model/profile.dart';
+import 'package:tugas_uas/screen/profile_form.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -14,34 +13,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late Future<List<Profile>> futureProfile;
-
-  @override
-  void initState() {
-    super.initState();
-    futureProfile = fetchProduct();
-  }
-
-  Future<List<Profile>> fetchProduct() async {
-    // TODO ganti URL broo
-    var url = Uri.parse('http://127.0.0.1:8000/user/json/');
-    var response = await http.get(
-      url,
-      headers: {"Content-Type": "application/json"},
+Future<List<Profile>> fetchProduct(CookieRequest request) async {
+    var data = await request.get(
+        'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/json',
     );
 
-    var data = jsonDecode(utf8.decode(response.bodyBytes));
-    List<Profile> listProfile = [];
+    List<Profile> list_profile = [];
     for (var d in data) {
       if (d != null) {
-        listProfile.add(Profile.fromJson(d));
+        list_profile.add(Profile.fromJson(d));
       }
     }
-    return listProfile;
+    return list_profile;
   }
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -54,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       drawer: const SideDrawer(),
       body: FutureBuilder<List<Profile>>(
-  future: futureProfile,
+  future: fetchProduct(request),
   builder: (context, snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return const CircularProgressIndicator();
@@ -70,28 +58,28 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(bottom: 4),
             child: Center(
               child: Text(
-                '${listProfile.first.fields.firstName} ${listProfile.first.fields.lastName}',
+                '${listProfile.first.fields.firstName ?? 'Name'} ${listProfile.first.fields.lastName ?? ''}',
                 style: const TextStyle(fontSize: 18),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
             child: Center(
               child: Text(
-                listProfile.first.fields.username,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+                'username',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              InfoRow(icon: const Icon(Icons.email), value: listProfile.first.fields.email),
+              InfoRow(icon: const Icon(Icons.email), value: listProfile.first.fields.email ?? 'email'),
               const Divider(),
-              InfoRow(icon: const Icon(Icons.local_phone), value: listProfile.first.fields.phoneNumber),
+               InfoRow(icon: const Icon(Icons.local_phone), value: listProfile.first.fields.phoneNumber ?? 'phone number'),
               const Divider(),
-              InfoRow(icon: const Icon(Icons.house), value: listProfile.first.fields.domicile),
+              InfoRow(icon: const Icon(Icons.house), value: listProfile.first.fields.domicile ?? 'domicile'),
             ],
           ),
           const SizedBox(height: 20),
@@ -117,7 +105,14 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UpdateProfilePage(),
+                      ),
+                    );
+                  },
                   child: const Text('Update Profile'),
                 ),
                 const SizedBox(width: 10),
@@ -140,7 +135,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 class InfoRow extends StatelessWidget {
   final Icon icon;
-  final String value;
+  final String? value;
 
   const InfoRow({Key? key, required this.icon, required this.value}) : super(key: key);
 
@@ -156,7 +151,10 @@ class InfoRow extends StatelessWidget {
           ),
           Expanded(
             flex: 4,
-            child: Text(value, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+            child: Text(
+              value != null ? value! : 'Placeholder',
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
+            ),
           ),
         ],
       ),

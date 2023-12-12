@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Future<List<Book>> getBooks() async {
     // TODO Ganti URL!!!
-    const url = "http://127.0.0.1:8000/api/books?page=all";
+    const url = "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/api/books?page=all";
     final response = await http.get(Uri.parse(url), headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
