@@ -26,10 +26,10 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -50,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue],
+            colors: [Colors.purple, Colors.blue],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -60,90 +60,78 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-              child: Text(
-                'Kindle Kids',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                labelText: 'Username',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
                 ),
               ),
+              style: const TextStyle(color: Colors.white),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: _usernameController,
-                      decoration: InputDecoration(
-                        labelText: 'Username',
-                      ),
-                    ),
-                    const SizedBox(height: 12.0),
-                    TextField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 24.0),
-                    ElevatedButton(
-                      onPressed: () async {
-                        String username = _usernameController.text;
-                        String password = _passwordController.text;
-
-                        final response = await request
-                            .login("http://127.0.0.1:8080/auth/login/", {
-                          'username': username,
-                          'password': password,
-                        });
-
-                        if (request.loggedIn) {
-                          String message = response['message'];
-                          String uname = response['username'];
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => Home()),
-                          );
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                                content:
-                                    Text("$message Selamat datang, $uname.")));
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Login Gagal'),
-                              content: Text(response['message']),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                      child: const Text('Login'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        onPrimary: Colors.white,
-                      ),
-                    ),
-                  ],
+            const SizedBox(height: 12.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
                 ),
               ),
+              obscureText: true,
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () async {
+                String username = _usernameController.text;
+                String password = _passwordController.text;
+
+                final response =
+                    await request.login("http://127.0.0.1:8080/auth/login/", {
+                  'username': username,
+                  'password': password,
+                });
+
+                if (request.loggedIn && context.mounted) {
+                  String message = response['message'];
+                  String uname = response['username'];
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Home()),
+                  );
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(SnackBar(
+                        content: Text("$message Selamat datang, $uname.")));
+                } else {
+                  if (context.mounted) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Login Gagal'),
+                        content: Text(response['message']),
+                        actions: [
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.white,
+              ),
+              child: const Text('Login'),
             ),
           ],
         ),
