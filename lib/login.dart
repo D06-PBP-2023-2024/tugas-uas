@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_uas/screen/home.dart';
-import 'main.dart'; // Make sure to import your main.dart
 
 void main() {
   runApp(const MyApp());
