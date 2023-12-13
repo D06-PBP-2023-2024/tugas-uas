@@ -21,7 +21,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: const LoginApp(),
+        home: const LoginPage(),
       ),
     );
   }
