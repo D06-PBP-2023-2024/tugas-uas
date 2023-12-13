@@ -26,10 +26,10 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.white, Colors.blue],
             begin: Alignment.topCenter,
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
+            const Center(
               child: Text(
                 'Kindle Kids',
                 style: TextStyle(
@@ -81,14 +81,14 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextField(
                       controller: _usernameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Username',
                       ),
                     ),
                     const SizedBox(height: 12.0),
                     TextField(
                       controller: _passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Password',
                       ),
                       obscureText: true,
@@ -105,12 +105,13 @@ class _LoginPageState extends State<LoginPage> {
                           'password': password,
                         });
 
-                        if (request.loggedIn) {
+                        if (request.loggedIn && context.mounted) {
                           String message = response['message'];
                           String uname = response['username'];
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => Home()),
+                            MaterialPageRoute(
+                                builder: (context) => const Home()),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
@@ -118,28 +119,30 @@ class _LoginPageState extends State<LoginPage> {
                                 content:
                                     Text("$message Selamat datang, $uname.")));
                         } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Login Gagal'),
-                              content: Text(response['message']),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
+                          if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Login Gagal'),
+                                content: Text(response['message']),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         }
                       },
-                      child: const Text('Login'),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        onPrimary: Colors.white,
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.blue,
                       ),
+                      child: const Text('Login'),
                     ),
                   ],
                 ),

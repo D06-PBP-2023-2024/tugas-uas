@@ -29,7 +29,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       drawer: const SideDrawer(),
