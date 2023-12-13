@@ -109,12 +109,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         String passwordConfirmation =
                             _passwordConfirmationController.text;
 
+                        if (username.isEmpty || password.isEmpty || passwordConfirmation.isEmpty) {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(const SnackBar(
+                              content: Text("Please fill in all fields."),
+                            ));
+                          return;
+                        }
+
                         if (password != passwordConfirmation) {
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(const SnackBar(
                                 content: Text(
-                                    "Register failed, password confimation incorrect.")));
+                                    "Register failed, password confirmation incorrect.")));
                           return;
                         }
                         final response = await request.post(
