@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/screen/user_profile.dart';
 import 'package:tugas_uas/screen/home.dart';
@@ -9,6 +11,7 @@ class SideDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Drawer(
       child: ListView(
         children: [
@@ -49,7 +52,7 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.account_circle_outlined),
+            leading: const Icon(Icons.login),
             title: const Text('Login'),
             onTap: () {
               Navigator.push(
@@ -60,9 +63,27 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Log Out"),
-            onTap: () {
-              Navigator.pop(context);
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            // Bagian redirection ke ShopFormPage
+            onTap: () async {
+              final response = await request.logout(
+                "http://127.0.0.1:8080/auth/logout/");
+              String message = response["message"];
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("$message See you again, $uname!"),
+                ));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("$message"),
+                ));
+              }
             },
           ),
           ListTile(
