@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/screen/user_profile.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/readingforum_page.dart';
@@ -48,6 +49,17 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.account_circle_outlined),
+            title: const Text('Login'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginApp(),
+                  ));
+            },
+          ),
+          ListTile(
             title: const Text("Log Out"),
             onTap: () {
               Navigator.pop(context);
@@ -62,45 +74,6 @@ class SideDrawer extends StatelessWidget {
                   builder: (context) => ReadingForumPage(),
                 ),
               );
-            },
-          ),
-          ListTile(
-            title: const Text("Reading Forum"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ReadingForumPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text("Log Out"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ReadingForumPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text("Reading Forum"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ReadingForumPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text("Log Out"),
-            onTap: () {
-              Navigator.pop(context);
             },
           ),
         ],

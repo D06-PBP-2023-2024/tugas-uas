@@ -13,7 +13,7 @@ class LoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kindle Kids',
+      title: 'Login',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -32,9 +32,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  bool _isRegistering = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Kindle Kids',
+          'Login',
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -65,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Center(
               child: Text(
-                _isRegistering ? 'Register' : 'Login',
+                'Kindle Kids',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -96,47 +93,17 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       obscureText: true,
                     ),
-                    if (_isRegistering) ...[
-                      const SizedBox(height: 12.0),
-                      TextField(
-                        controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                          labelText: 'Confirm Password',
-                        ),
-                        obscureText: true,
-                      ),
-                    ],
                     const SizedBox(height: 24.0),
                     ElevatedButton(
                       onPressed: () async {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
-                        String confirmPassword = _confirmPasswordController.text;
 
-                        if (_isRegistering && password != confirmPassword) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Registration Failed'),
-                              content: const Text('Passwords do not match.'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                          return;
-                        }
-
-                        final response = await (request.login(
-                                "http://127.0.0.1:8080/auth/login/", {
-                                'username': username,
-                                'password': password,
-                              }));
+                        final response = await request
+                            .login("http://127.0.0.1:8080/auth/login/", {
+                          'username': username,
+                          'password': password,
+                        });
 
                         if (request.loggedIn) {
                           String message = response['message'];
@@ -154,9 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: _isRegistering
-                                  ? const Text('Registration Failed')
-                                  : const Text('Login Failed'),
+                              title: const Text('Login Gagal'),
                               content: Text(response['message']),
                               actions: [
                                 TextButton(
@@ -170,24 +135,10 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         }
                       },
-                      child: Text(_isRegistering ? 'Register' : 'Login'),
+                      child: const Text('Login'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
                         onPrimary: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 12.0),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _isRegistering = !_isRegistering;
-                        });
-                      },
-                      child: Text(
-                        _isRegistering
-                            ? 'Already have an account? Login'
-                            : 'Don\'t have an account? Register',
-                        style: TextStyle(color: Colors.blue),
                       ),
                     ),
                   ],
