@@ -47,7 +47,7 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             children: <Widget>[
               Container(
-                height: 400,
+                height: 425,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/background.png'),
@@ -57,61 +57,15 @@ class LoginPageState extends State<LoginPage> {
                 child: Stack(
                   children: <Widget>[
                     Positioned(
-                      left: 30,
-                      width: 80,
-                      height: 200,
-                      child: FadeInUp(
-                        duration: Duration(seconds: 1),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/light-1.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 140,
-                      width: 80,
-                      height: 150,
-                      child: FadeInUp(
-                        duration: Duration(milliseconds: 1200),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/light-2.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 40,
-                      top: 40,
-                      width: 80,
-                      height: 150,
-                      child: FadeInUp(
-                        duration: Duration(milliseconds: 1300),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/clock.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
                       child: FadeInUp(
                         duration: Duration(milliseconds: 1600),
                         child: Container(
-                          margin: EdgeInsets.only(top: 50),
+                          margin: EdgeInsets.only(top: 360),
                           child: Center(
                             child: Text(
                               "Login",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.blue,
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -124,7 +78,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(30.0),
+                padding: EdgeInsets.all(30),
                 child: Column(
                   children: <Widget>[
                     FadeInUp(
@@ -133,9 +87,9 @@ class LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(35),
                           border: Border.all(
-                            color: Color.fromRGBO(143, 148, 251, 1),
+                            color: Colors.blue,
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -152,7 +106,7 @@ class LoginPageState extends State<LoginPage> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: Color.fromRGBO(143, 148, 251, 1),
+                                    color: Colors.blue,
                                   ),
                                 ),
                               ),
@@ -229,7 +183,7 @@ class LoginPageState extends State<LoginPage> {
                                 showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text('Login Gagal'),
+                                    title: const Text('Login Failed'),
                                     content: Text(response['message']),
                                     actions: [
                                       TextButton(
@@ -264,7 +218,6 @@ class LoginPageState extends State<LoginPage> {
                       duration: Duration(milliseconds: 2000),
                       child: GestureDetector(
                         onTap: () {
-                          // Navigate to Register Page
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => RegisterPage()),
@@ -273,7 +226,7 @@ class LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Don't have an account yet? Register now!",
                           style: TextStyle(
-                            color: Color.fromRGBO(143, 148, 251, 1),
+                            color: Colors.blue,
                           ),
                         ),
                       ),
