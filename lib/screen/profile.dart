@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 import 'package:tugas_uas/model/profile.dart';
 import 'package:tugas_uas/screen/profile_form.dart';
@@ -63,12 +64,12 @@ Future<List<Profile>> fetchProduct(CookieRequest request) async {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20.0),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
             child: Center(
               child: Text(
-                'username',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                loggedInUsername,
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
           ),

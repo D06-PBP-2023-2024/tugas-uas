@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
+String loggedInUsername = "";
 
 void main() {
   runApp(const LoginApp());
@@ -108,6 +109,7 @@ class LoginPageState extends State<LoginPage> {
                         if (request.loggedIn && context.mounted) {
                           String message = response['message'];
                           String uname = response['username'];
+                          loggedInUsername = uname;
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

@@ -35,7 +35,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,
           ),
-          drawer: const SideDrawer(),
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -172,11 +171,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                 final response = await request.postJson(
                                 "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/update-profile-flutter/",
                                 jsonEncode(<String, String>{
-                                    'firstname': _firstname,
-                                    'lastname' : _lastname,
-                                    'email' : _email,
-                                    'phonenumber' : _phonenumber,
-                                    'domicile' : _domicile
+                                  'first_name': _firstname,
+                                  'last_name' : _lastname,
+                                  'email' : _email,
+                                  'phone_number': _phonenumber,
+                                  'domicile' : _domicile,
                                 }));
                                 if (response['status'] == 'success') {
                                     ScaffoldMessenger.of(context)

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_uas/screen/user_profile.dart';
+import 'package:tugas_uas/screen/profile.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/readingforum_page.dart';
 
