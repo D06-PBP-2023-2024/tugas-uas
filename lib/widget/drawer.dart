@@ -53,17 +53,7 @@ class SideDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          ListTile(
-            title: const Text("Reading Forum"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ReadingForumPage(),
-                ),
-              );
-            },
-          ),
+        
           ListTile(
             title: const Text("Reading Forum"),
             onTap: () {

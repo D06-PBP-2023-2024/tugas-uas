@@ -101,25 +101,19 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-<<<<<<< HEAD
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
-=======
-                      backgroundColor: MaterialStateProperty.all(Colors.orange),
->>>>>>> ec9d68cbcd19aba380f9cb9a4a1857369e52c472
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        print("before making request");
                         final response = await request.postJson(
-<<<<<<< HEAD
-                          "http://127.0.0.1:8000/",
-=======
                           "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/",
->>>>>>> ec9d68cbcd19aba380f9cb9a4a1857369e52c472
                           jsonEncode(<String, String>{
                             'title': _title,
                             'content': _content,
                           }),
                         );
+                        print("after making request");
                         if (response['status'] == 'success') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -128,22 +122,14 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                           );
                           Navigator.pushReplacement(
                             context,
-<<<<<<< HEAD
-                            MaterialPageRoute(builder: (context) => Home()),
-=======
                             MaterialPageRoute(
                                 builder: (context) => const Home()),
->>>>>>> ec9d68cbcd19aba380f9cb9a4a1857369e52c472
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-<<<<<<< HEAD
-                              content: Text("An error occurred, please try again."),
-=======
                               content:
                                   Text("An error occurred, please try again."),
->>>>>>> ec9d68cbcd19aba380f9cb9a4a1857369e52c472
                             ),
                           );
                         }

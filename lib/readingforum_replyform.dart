@@ -28,7 +28,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       drawer: const SideDrawer(),
@@ -73,7 +73,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.orange),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
