@@ -54,7 +54,7 @@ class Profile extends StatelessWidget {
                             onPressed: () async {
                               final request = Provider.of<CookieRequest>(context, listen: false);
                               final response = await request.logout(
-                                "http://127.0.0.1:8080/auth/logout/"
+                                "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/"
                               );
                               String message = response["message"];
                               if (response['status']) {

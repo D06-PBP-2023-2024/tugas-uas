@@ -68,7 +68,7 @@ class SideDrawer extends StatelessWidget {
             // Bagian redirection ke ShopFormPage
             onTap: () async {
               final response = await request.logout(
-                "http://127.0.0.1:8080/auth/logout/");
+                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
               String message = response["message"];
               if (response['status']) {
                 String uname = response["username"];
