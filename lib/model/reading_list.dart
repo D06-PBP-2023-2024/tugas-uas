@@ -4,50 +4,48 @@
 
 import 'dart:convert';
 
-List<ReadingList> readingListFromJson(String str) => List<ReadingList>.from(json.decode(str).map((x) => ReadingList.fromJson(x)));
+List<ReadingList> readingListFromJson(String str) =>
+    List<ReadingList>.from(json.decode(str).map((x) => ReadingList.fromJson(x)));
 
-String readingListToJson(List<ReadingList> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String readingListToJson(List<ReadingList> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ReadingList {
-    String model;
-    int pk;
-    Fields fields;
+  List<Book> books;
 
-    ReadingList({
-        required this.model,
-        required this.pk,
-        required this.fields,
-    });
+  ReadingList({
+    required this.books,
+  });
 
-    factory ReadingList.fromJson(Map<String, dynamic> json) => ReadingList(
-        model: json["model"],
-        pk: json["pk"],
-        fields: Fields.fromJson(json["fields"]),
-    );
+  factory ReadingList.fromJson(Map<String, dynamic> json) => ReadingList(
+        books: List<Book>.from(json["books"].map((x) => Book.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
-        "model": model,
-        "pk": pk,
-        "fields": fields.toJson(),
-    };
+  Map<String, dynamic> toJson() => {
+        "books": List<dynamic>.from(books.map((x) => x.toJson())),
+      };
 }
 
-class Fields {
-    int user;
-    int book;
+class Book {
+  String title;
+  String coverUrl;
+  String author;
 
-    Fields({
-        required this.user,
-        required this.book,
-    });
+  Book({
+    required this.title,
+    required this.coverUrl,
+    required this.author,
+  });
 
-    factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        user: json["user"],
-        book: json["book"],
-    );
+  factory Book.fromJson(Map<String, dynamic> json) => Book(
+        title: json["title"],
+        coverUrl: json["cover_url"],
+        author: json["author"],
+      );
 
-    Map<String, dynamic> toJson() => {
-        "user": user,
-        "book": book,
-    };
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "cover_url": coverUrl,
+        "author": author,
+      };
 }

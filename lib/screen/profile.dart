@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,8 @@ import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 import 'package:tugas_uas/model/profile.dart';
 import 'package:tugas_uas/screen/profile_form.dart';
+import 'package:tugas_uas/model/like.dart';
+import 'package:tugas_uas/model/reading_list.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -14,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-Future<List<Profile>> fetchProduct(CookieRequest request) async {
+  Future<List<Profile>> fetchProduct(CookieRequest request) async {
     var data = await request.get(
         'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/json',
     );
@@ -26,6 +29,24 @@ Future<List<Profile>> fetchProduct(CookieRequest request) async {
       }
     }
     return list_profile;
+  }
+
+  Future<Like> fetchLikes(CookieRequest request) async {
+    var response = await request.get(
+      'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/liked-books',
+    );
+
+    String jsonResponse = json.encode(response);
+    return Like.fromJson(json.decode(jsonResponse));
+  }
+
+  Future<ReadingList> fetchReadinglist(CookieRequest request) async {
+    var response = await request.get(
+      'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/readinglist-books/',
+    );
+
+    String jsonResponse = json.encode(response);
+    return ReadingList.fromJson(json.decode(jsonResponse));
   }
 
   @override
@@ -43,93 +64,179 @@ Future<List<Profile>> fetchProduct(CookieRequest request) async {
       ),
       drawer: const SideDrawer(),
       body: FutureBuilder<List<Profile>>(
-  future: fetchProduct(request),
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return const CircularProgressIndicator();
-    } else if (snapshot.hasError) {
-      return Text('Error: ${snapshot.error}');
-    } else {
-      List<Profile> listProfile = snapshot.data!;
+        future: fetchProduct(request),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            List<Profile> listProfile = snapshot.data!;
 
-      return ListView(
-        padding: const EdgeInsets.all(15.0),
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Center(
-              child: Text(
-                '${listProfile.first.fields.firstName ?? 'Name'} ${listProfile.first.fields.lastName ?? ''}',
-                style: const TextStyle(fontSize: 18),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: Center(
-              child: Text(
-                loggedInUsername,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              InfoRow(icon: const Icon(Icons.email), value: listProfile.first.fields.email ?? 'email'),
-              const Divider(),
-               InfoRow(icon: const Icon(Icons.local_phone), value: listProfile.first.fields.phoneNumber ?? 'phone number'),
-              const Divider(),
-              InfoRow(icon: const Icon(Icons.house), value: listProfile.first.fields.domicile ?? 'domicile'),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const SizedBox(
-            width: double.infinity,
-            child: Card(
-              margin: EdgeInsets.all(0),
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Likes', style: TextStyle(fontSize: 18)),
-                    // TODO: Add likes
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const UpdateProfilePage(),
+            return FutureBuilder<Like>(
+              future: fetchLikes(request),
+              builder: (context, snapshotLikes) {
+                if (snapshotLikes.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshotLikes.hasError) {
+                  return Text('Error: ${snapshotLikes.error}');
+                } else {
+                  Like listLike = snapshotLikes.data ?? Like(books: []);
+
+              return FutureBuilder<ReadingList>(
+                future: fetchReadinglist(request),
+                builder: (context, snapshotLikes) {
+                  if (snapshotLikes.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshotLikes.hasError) {
+                    return Text('Error: ${snapshotLikes.error}');
+                  } else {
+                    ReadingList listReadinglist = snapshotLikes.data ?? ReadingList(books: []);
+
+                return ListView(
+                  padding: const EdgeInsets.all(15.0),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Center(
+                        child: Text(
+                          '${listProfile.first.fields.firstName ?? 'Name'} ${listProfile.first.fields.lastName ?? ''}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
                       ),
-                    );
-                  },
-                  child: const Text('Update Profile'),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Log Out'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
-  },
-),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: Center(
+                        child: Text(
+                          loggedInUsername,
+                          style: const TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        InfoRow(icon: const Icon(Icons.email), value: listProfile.first.fields.email ?? 'email'),
+                        const Divider(),
+                        InfoRow(icon: const Icon(Icons.local_phone), value: listProfile.first.fields.phoneNumber ?? 'phone number'),
+                        const Divider(),
+                        InfoRow(icon: const Icon(Icons.house), value: listProfile.first.fields.domicile ?? 'domicile'),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        margin: const EdgeInsets.all(0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
+                                child: Text('Likes', style: TextStyle(fontSize: 18)),
+                              ),
+                              listLike.books.isEmpty
+                                  ? const Text('No liked books')
+                                  : ListView.separated(
+                                      shrinkWrap: true,
+                                      itemCount: listLike.books.length,
+                                      separatorBuilder: (BuildContext context, int index) {
+                                        return const Divider();
+                                      },
+                                      itemBuilder: (context, index) {
+                                        final book = listLike.books[index];
+                                        final title = book.title;
+                                        final coverUrl = book.coverUrl;
+                                        final author = book.author;
 
+                                        return ListTile(
+                                          title: Text(title),
+                                          leading: Image.network(coverUrl),
+                                          subtitle: Text(author),
+                                        );
+                                      },
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        margin: const EdgeInsets.only(top: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
+                                child: Text('Reading List', style: TextStyle(fontSize: 18)),
+                              ),
+                              listReadinglist.books.isEmpty
+                                  ? const Text('No Reading List')
+                                  : ListView.separated(
+                                      shrinkWrap: true,
+                                      itemCount: listReadinglist.books.length,
+                                      separatorBuilder: (BuildContext context, int index) {
+                                        return const Divider();
+                                      },
+                                      itemBuilder: (context, index) {
+                                        final book = listReadinglist.books[index];
+                                        final title = book.title;
+                                        final coverUrl = book.coverUrl;
+                                        final author = book.author;
+
+                                        return ListTile(
+                                          title: Text(title),
+                                          leading: Image.network(coverUrl),
+                                          subtitle: Text(author),
+                                        );
+                                      },
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const UpdateProfilePage(),
+                                ),
+                              );
+                            },
+                            child: const Text('Update Profile'),
+                          ),
+                          const SizedBox(width: 10),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Log Out'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+                }
+              }
+            );
+          }
+        },
+      );
+      }}
+      ),    
     );
   }
 }
