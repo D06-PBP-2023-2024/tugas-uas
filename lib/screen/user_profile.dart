@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_uas/widget/drawer.dart';
+import 'package:tugas_uas/widget/like.dart';
+import 'package:tugas_uas/widget/comment.dart';
+import 'package:tugas_uas/widget/reading-list.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -19,8 +22,10 @@ class Profile extends StatelessWidget {
                   children: <Widget>[
                     Text('Welcome!', style: TextStyle(fontSize: 24)),
                     SizedBox(height: 10),
-                    Text('First Name Last Name', style: TextStyle(fontSize: 18)),
-                    Text('Username', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    Text('First Name Last Name',
+                        style: TextStyle(fontSize: 18)),
+                    Text('Username',
+                        style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ],
                 ),
               ),
@@ -35,7 +40,8 @@ class Profile extends StatelessWidget {
                     children: <Widget>[
                       const InfoRow(title: 'Email', value: 'email'),
                       const Divider(),
-                      const InfoRow(title: 'Phone number', value: 'phone number'),
+                      const InfoRow(
+                          title: 'Phone number', value: 'phone number'),
                       const Divider(),
                       const InfoRow(title: 'Domicile', value: 'domicile'),
                       const Spacer(),
@@ -43,14 +49,11 @@ class Profile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           ElevatedButton(
-                            onPressed: () {}, 
-                            child: const Text('Update Profile')
-                          ),
+                              onPressed: () {},
+                              child: const Text('Update Profile')),
                           const SizedBox(width: 10),
                           ElevatedButton(
-                            onPressed: () {}, 
-                            child: const Text('Log Out')
-                          ),
+                              onPressed: () {}, child: const Text('Log Out')),
                         ],
                       ),
                     ],
@@ -66,7 +69,7 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Likes', style: TextStyle(fontSize: 18)),
-                      // TODO: add likessss
+                      LikeWidget(),
                     ],
                   ),
                 ),
@@ -80,7 +83,7 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Comments', style: TextStyle(fontSize: 18)),
-                      // TODO: Add commentssss
+                      CommentPage(),
                     ],
                   ),
                 ),
@@ -94,7 +97,7 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Reading List', style: TextStyle(fontSize: 18)),
-                      // TODO: Add reading listssss
+                      ReadingList(),
                     ],
                   ),
                 ),
@@ -123,7 +126,8 @@ class InfoRow extends StatelessWidget {
         ),
         Expanded(
           flex: 2,
-          child: Text(value, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+          child: Text(value,
+              style: const TextStyle(fontSize: 16, color: Colors.grey)),
         ),
       ],
     );
