@@ -226,11 +226,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               );
                               return;
                             }
-                            final response = await request
-                                .post("http://127.0.0.1:8080/auth/register/", {
-                              'username': username,
-                              'password': password,
-                            });
+                            final response = await request.post(
+                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/register/",
+                                {
+                                  'username': username,
+                                  'password': password,
+                                });
 
                             if (response['status']) {
                               String message = response['message'];
