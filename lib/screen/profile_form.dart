@@ -1,9 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-import 'package:tugas_uas/screen/home.dart';
+import 'package:tugas_uas/screen/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:tugas_uas/widget/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -27,13 +26,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         final request = context.watch<CookieRequest>();
         return Scaffold(
           appBar: AppBar(
-            title: const Center(
-              child: Text(
-                'Update Profile',
-              ),
-            ),
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
+            title: const Text('Update Profile'),
           ),
           body: Form(
             key: _formKey,
@@ -56,12 +49,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                           _firstname = value!;
                         });
                       },
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "First name can't be empty";
-                        }
-                        return null;
-                      },
                     ),
                   ),
                   Padding(
@@ -78,12 +65,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         setState(() {
                           _lastname = value!;
                         });
-                      },
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Last name can't be empty!";
-                        }
-                        return null;
                       },
                     ),
                   ),
@@ -102,12 +83,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                           _email = value!;
                         });
                       },
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Email can't be empty";
-                        }
-                        return null;
-                      },
                     ),
                   ),
                   Padding(
@@ -124,12 +99,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         setState(() {
                           _phonenumber = value!;
                         });
-                      },
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Phone number can't be empty";
-                        }
-                        return null;
                       },
                     ),
                   ),
@@ -148,12 +117,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                           _domicile = value!;
                         });
                       },
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Domicile can't be empty";
-                        }
-                        return null;
-                      },
                     ),
                   ),
                   Align(
@@ -169,7 +132,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             if (_formKey.currentState!.validate()) {
                                 // Kirim ke Django dan tunggu respons
                                 final response = await request.postJson(
-                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/update-profile-flutter/",
+                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/update-profile-flutter-2/",
                                 jsonEncode(<String, String>{
                                   'first_name': _firstname,
                                   'last_name' : _lastname,
@@ -184,7 +147,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                     ));
                                     Navigator.pushReplacement(
                                         context,
-                                        MaterialPageRoute(builder: (context) => const Home()),
+                                        MaterialPageRoute(builder: (context) => const ProfilePage()),
                                     );
                                 } else {
                                     ScaffoldMessenger.of(context)

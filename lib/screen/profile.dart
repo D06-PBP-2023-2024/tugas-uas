@@ -8,6 +8,7 @@ import 'package:tugas_uas/model/profile.dart';
 import 'package:tugas_uas/screen/profile_form.dart';
 import 'package:tugas_uas/model/like.dart';
 import 'package:tugas_uas/model/reading_list.dart';
+import 'package:tugas_uas/model/comment.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -49,18 +50,21 @@ class _ProfilePageState extends State<ProfilePage> {
     return ReadingList.fromJson(json.decode(jsonResponse));
   }
 
+  Future<Comment> fetchComment(CookieRequest request) async {
+    var response = await request.get(
+      'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/comment-books/',
+    );
+
+    String jsonResponse = json.encode(response);
+    return Comment.fromJson(json.decode(jsonResponse));
+  }
+
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Profile',
-          ),
-        ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: const Text('Profile'),
       ),
       drawer: const SideDrawer(),
       body: FutureBuilder<List<Profile>>(
@@ -92,6 +96,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     return Text('Error: ${snapshotLikes.error}');
                   } else {
                     ReadingList listReadinglist = snapshotLikes.data ?? ReadingList(books: []);
+
+                    return FutureBuilder<Comment>(
+                      future: fetchComment(request),
+                      builder: (context, snapshotLikes) {
+                        if (snapshotLikes.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshotLikes.hasError) {
+                          return Text('Error: ${snapshotLikes.error}');
+                        } else {
+                          Comment listComment = snapshotLikes.data ?? Comment(books: []);
 
                 return ListView(
                   padding: const EdgeInsets.all(15.0),
@@ -175,10 +189,49 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               const Padding(
                                 padding: EdgeInsets.only(bottom: 8.0),
+                                child: Text('Comment', style: TextStyle(fontSize: 18)),
+                              ),
+                              listComment.books.isEmpty
+                                  ? const Text('No Comment')
+                                  : ListView.separated(
+                                      shrinkWrap: true,
+                                      itemCount: listComment.books.length,
+                                      separatorBuilder: (BuildContext context, int index) {
+                                        return const Divider();
+                                      },
+                                      itemBuilder: (context, index) {
+                                        final book = listComment.books[index];
+                                        final title = book.title;
+                                        final coverUrl = book.coverUrl;
+                                        final comment = book.comment;
+
+                                        return ListTile(
+                                          title: Text(title),
+                                          leading: Image.network(coverUrl),
+                                          subtitle: Text(comment),
+                                        );
+                                      },
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        margin: const EdgeInsets.only(top: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text('Reading List', style: TextStyle(fontSize: 18)),
                               ),
                               listReadinglist.books.isEmpty
-                                  ? const Text('No Reading List')
+                                  ? const Text('No Books in Reading List')
                                   : ListView.separated(
                                       shrinkWrap: true,
                                       itemCount: listReadinglist.books.length,
@@ -221,7 +274,24 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           const SizedBox(width: 10),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final response = await request.logout(
+                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                              String message = response["message"];
+                              if (response['status']) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("$message See you again, $loggedInUsername!"),
+                                ));
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(message),
+                                ));
+                              }
+                            },
                             child: const Text('Log Out'),
                           ),
                         ],
@@ -234,8 +304,8 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           }
         },
-      );
-      }}
+      );}}
+      );}}
       ),    
     );
   }
