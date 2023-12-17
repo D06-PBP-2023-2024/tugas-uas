@@ -68,20 +68,20 @@ class SideDrawer extends StatelessWidget {
             // Bagian redirection ke ShopFormPage
             onTap: () async {
               final response = await request.logout(
-                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                  "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
               String message = response["message"];
               if (response['status']) {
                 String uname = response["username"];
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("$message See you again, $uname!"),
+                  content: Text("$message See you again, $uname!"),
                 ));
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("$message"),
+                  content: Text("$message"),
                 ));
               }
             },

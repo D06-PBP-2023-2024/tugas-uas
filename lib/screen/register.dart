@@ -9,12 +9,11 @@ void main() {
 }
 
 class RegisterApp extends StatelessWidget {
-  const RegisterApp({Key? key});
+const RegisterApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+@override
+Widget build(BuildContext context) {
+   return MaterialApp(
       title: 'Register',
       theme: ThemeData(
         primarySwatch: Colors.blue,

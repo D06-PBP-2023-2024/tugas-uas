@@ -6,16 +6,16 @@ import 'package:tugas_uas/screen/readingforum_detail.dart';
 class ReadingForumPage extends StatelessWidget {
   final Discussion? discussion;
 
-  ReadingForumPage({this.discussion});
+  const ReadingForumPage({super.key, this.discussion});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discussion List'),
+        title: const Text('Discussion Detail'),
       ),
       body: ListView(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         children: [
           // Baris untuk navigasi ke ReadingForumFormPage
           Padding(
@@ -26,11 +26,11 @@ class ReadingForumPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ReadingForumFormPage(),
+                    builder: (context) => const ReadingForumFormPage(),
                   ),
                 );
               },
-              child: Text('Create Discussion'),
+              child: const Text('Create Discussion'),
             ),
           ),
           // Baris untuk navigasi ke ReadingForumDetailPage (berdasarkan diskusi yang diklik)
@@ -48,7 +48,7 @@ class ReadingForumPage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('View Discussion Detail'),
+                child: const Text('View Discussion Detail'),
               ),
             ),
         ],
@@ -78,11 +78,11 @@ class ReadingForumPage extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: 100,
               child: Text(
                 '$label:',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             Expanded(
