@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/screen/user_profile.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/readingforum_page.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
