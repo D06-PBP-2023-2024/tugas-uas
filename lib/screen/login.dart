@@ -226,7 +226,7 @@ class LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Don't have an account yet? Register now!",
                           style: TextStyle(
-                            color: Color.fromRGBO(143, 148, 251, 1),
+                            color: Colors.blue,
                           ),
                         ),
                       ),
