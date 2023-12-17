@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
+import 'package:tugas_uas/screen/register.dart';
 
 void main() {
   runApp(const LoginApp());
@@ -39,11 +40,10 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Login',
+          'Kindle Kids',
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
-            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.blue,
@@ -62,11 +62,11 @@ class LoginPageState extends State<LoginPage> {
           children: [
             const Center(
               child: Text(
-                'Kindle Kids',
+                'Login',
                 style: TextStyle(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  fontWeight: FontWeight.bold
                 ),
               ),
             ),
@@ -145,6 +145,17 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       child: const Text('Login'),
                     ),
+                    const SizedBox(height: 12.0),
+                    ElevatedButton(
+                    onPressed: () {
+                        // Navigate to Register Page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterApp()),
+                        );
+                    },
+                    child: const Text('Register'),
+                    )
                   ],
                 ),
               ),

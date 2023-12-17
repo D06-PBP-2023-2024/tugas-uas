@@ -1,163 +1,161 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/widget/drawer.dart';
-import 'package:tugas_uas/model/profile.dart';
-import 'package:tugas_uas/screen/profile_form.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-Future<List<Profile>> fetchProduct(CookieRequest request) async {
-    var data = await request.get(
-        'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/json',
-    );
-
-    List<Profile> list_profile = [];
-    for (var d in data) {
-      if (d != null) {
-        list_profile.add(Profile.fromJson(d));
-      }
-    }
-    return list_profile;
-  }
+class Profile extends StatelessWidget {
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Profile',
-          ),
-        ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
-      drawer: const SideDrawer(),
-      body: FutureBuilder<List<Profile>>(
-  future: fetchProduct(request),
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return const CircularProgressIndicator();
-    } else if (snapshot.hasError) {
-      return Text('Error: ${snapshot.error}');
-    } else {
-      List<Profile> listProfile = snapshot.data!;
-
-      return ListView(
-        padding: const EdgeInsets.all(15.0),
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Center(
-              child: Text(
-                '${listProfile.first.fields.firstName ?? 'Name'} ${listProfile.first.fields.lastName ?? ''}',
-                style: const TextStyle(fontSize: 18),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20.0),
-            child: Center(
-              child: Text(
-                'username',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              InfoRow(icon: const Icon(Icons.email), value: listProfile.first.fields.email ?? 'email'),
-              const Divider(),
-               InfoRow(icon: const Icon(Icons.local_phone), value: listProfile.first.fields.phoneNumber ?? 'phone number'),
-              const Divider(),
-              InfoRow(icon: const Icon(Icons.house), value: listProfile.first.fields.domicile ?? 'domicile'),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const SizedBox(
-            width: double.infinity,
-            child: Card(
-              margin: EdgeInsets.all(0),
-              child: Padding(
-                padding: EdgeInsets.all(15),
+    return MaterialApp(
+      home: Scaffold(
+        drawer: const SideDrawer(),
+        body: Column(
+          children: <Widget>[
+            const Expanded(
+              flex: 1,
+              child: Card(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Likes', style: TextStyle(fontSize: 18)),
-                    // TODO: Add likes
+                    Text('Welcome!', style: TextStyle(fontSize: 24)),
+                    SizedBox(height: 10),
+                    Text('First Name Last Name',
+                        style: TextStyle(fontSize: 18)),
+                    Text('Username',
+                        style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ],
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const UpdateProfilePage(),
+            Expanded(
+              flex: 2,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const InfoRow(title: 'Email', value: 'email'),
+                      const Divider(),
+                      const InfoRow(
+                          title: 'Phone number', value: 'phone number'),
+                      const Divider(),
+                      const InfoRow(title: 'Domicile', value: 'domicile'),
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Update Profile')),
+                          const SizedBox(width: 10),
+                          ElevatedButton(
+                              onPressed: () async {
+                                final request = Provider.of<CookieRequest>(
+                                    context,
+                                    listen: false);
+                                final response = await request.logout(
+                                    "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                                String message = response["message"];
+                                if (response['status']) {
+                                  String uname = response["username"];
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content:
+                                        Text("$message Sampai jumpa, $uname."),
+                                  ));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const LoginApp()),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("$message"),
+                                  ));
+                                }
+                              },
+                              child: const Text('Log Out')),
+                        ],
                       ),
-                    );
-                  },
-                  child: const Text('Update Profile'),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Log Out'),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
-      );
-    }
-  },
-),
-
+            const Expanded(
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Likes', style: TextStyle(fontSize: 18)),
+                      // TODO: add likessss
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Expanded(
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Comments', style: TextStyle(fontSize: 18)),
+                      // TODO: Add commentssss
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Expanded(
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Reading List', style: TextStyle(fontSize: 18)),
+                      // TODO: Add reading listssss
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class InfoRow extends StatelessWidget {
-  final Icon icon;
-  final String? value;
+  final String title;
+  final String value;
 
-  const InfoRow({Key? key, required this.icon, required this.value}) : super(key: key);
+  const InfoRow({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: icon,
-          ),
-          Expanded(
-            flex: 4,
-            child: Text(
-              value != null ? value! : 'Placeholder',
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          ),
-        ],
-      ),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Text(title, style: const TextStyle(fontSize: 16)),
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(value,
+              style: const TextStyle(fontSize: 16, color: Colors.grey)),
+        ),
+      ],
     );
   }
 }
