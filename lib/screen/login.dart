@@ -156,74 +156,87 @@ class LoginPageState extends State<LoginPage> {
                             String username = _usernameController.text;
                             String password = _passwordController.text;
 
-                        final response = await request
-                            .login("http://127.0.0.1:8080/auth/login/", {
-                          'username': username,
-                          'password': password,
-                        });
-
-                        if (request.loggedIn && context.mounted) {
-                          String message = response['message'];
-                          String uname = response['username'];
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Home()),
-                          );
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                                content:
-                                    Text("$message Selamat datang, $uname.")));
-                        } else {
-                          if (context.mounted) {
->>>>>>>>> Temporary merge branch 2
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Login Gagal'),
-                                content: Text(response['message']),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('OK'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
+                            final response = await request.login(
+                              "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/login/",
+                              {
+                                'username': username,
+                                'password': password,
+                              },
                             );
-                          }
-<<<<<<<<< Temporary merge branch 1
-                        },
-                        child: const Text('Login'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          onPrimary: Colors.white,
+
+                            if (request.loggedIn && context.mounted) {
+                              String message = response['message'];
+                              String uname = response['username'];
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Home(),
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(SnackBar(
+                                    content: Text(
+                                        "$message Selamat datang, $uname.")));
+                            } else {
+                              if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Login Failed'),
+                                    content: Text(response['message']),
+                                    actions: [
+                                      TextButton(
+                                        child: const Text('OK'),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal: 24.0,
+                            ),
+                          ),
+                          child: const Text('Login'),
                         ),
                       ),
-                    ],
-                  ),
-=========
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
+                    ),
+                    SizedBox(
+                      height: 70,
+                    ),
+                    FadeInUp(
+                      duration: Duration(milliseconds: 2000),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => RegisterPage()),
+                          );
+                        },
+                        child: Text(
+                          "Don't have an account yet? Register now!",
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
                       ),
-                      child: const Text('Login'),
                     ),
                   ],
->>>>>>>>> Temporary merge branch 2
                 ),
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
-<<<<<<<<< Temporary merge branch 1
-      );
-    }
-=========
       ),
     );
   }
