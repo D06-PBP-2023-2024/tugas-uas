@@ -86,6 +86,17 @@ class SideDrawer extends StatelessWidget {
               }
             },
           ),
+          ListTile(
+            title: const Text("Reading Forum"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReadingForumPage(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
