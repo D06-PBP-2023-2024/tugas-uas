@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tugas_uas/model/reading_forum.dart';
 import 'package:tugas_uas/readingforum_form.dart';
 import 'package:tugas_uas/screen/readingforum_detail.dart';
+import 'package:tugas_uas/widget/drawer.dart';
 
 class ReadingForumPage extends StatelessWidget {
   final Discussion? discussion;
@@ -14,6 +15,7 @@ class ReadingForumPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Discussion List'),
       ),
+      drawer: const SideDrawer(),
       body: ListView(
         padding: EdgeInsets.all(8.0),
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_uas/screen/readingforum_page.dart';
 import 'login.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: const LoginApp(),
+        home:  LoginPage(),
       ),
     );
   }
