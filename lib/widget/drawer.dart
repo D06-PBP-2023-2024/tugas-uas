@@ -47,7 +47,7 @@ class SideDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Profile(),
+                    builder: (context) => const ProfilePage(),
                   ));
             },
           ),
