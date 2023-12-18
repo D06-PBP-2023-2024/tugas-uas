@@ -4,12 +4,11 @@
 
 import 'dart:convert';
 
-BookDetail bookDetailFromJson(String str) =>
-    BookDetail.fromJson(json.decode(str));
+Book bookDetailFromJson(String str) => Book.fromJson(json.decode(str));
 
-String bookDetailToJson(BookDetail data) => json.encode(data.toJson());
+String bookDetailToJson(Book data) => json.encode(data.toJson());
 
-class BookDetail {
+class Book {
   int? id;
   Fields? fields;
   int? downloadCount;
@@ -19,7 +18,7 @@ class BookDetail {
   List<Comment>? comments;
   List<dynamic>? readingList;
 
-  BookDetail({
+  Book({
     this.id,
     this.fields,
     this.downloadCount,
@@ -30,7 +29,7 @@ class BookDetail {
     this.readingList,
   });
 
-  factory BookDetail.fromJson(Map<String, dynamic> json) => BookDetail(
+  factory Book.fromJson(Map<String, dynamic> json) => Book(
         id: json["id"],
         fields: json["fields"] == null ? null : Fields.fromJson(json["fields"]),
         downloadCount: json["download_count"],
