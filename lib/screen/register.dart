@@ -2,41 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:tugas_uas/screen/home.dart';
-import 'package:tugas_uas/screen/register.dart';
-
-String loggedInUsername = "";
+import 'package:tugas_uas/screen/login.dart';
 
 void main() {
-  runApp(const LoginApp());
+  runApp(const RegisterApp());
 }
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({super.key});
+class RegisterApp extends StatelessWidget {
+  const RegisterApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Login',
+      title: 'Register',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home: const RegisterPage(),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key});
 
   @override
-  LoginPageState createState() => LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class LoginPageState extends State<LoginPage> {
                           margin: EdgeInsets.only(top: 360),
                           child: Center(
                             child: Text(
-                              "Login",
+                              "Register",
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: 40,
@@ -115,20 +113,48 @@ class LoginPageState extends State<LoginPage> {
                                 controller: _usernameController,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Username",
-                                  hintStyle: TextStyle(color: Colors.grey[700]),
+                                  labelText: 'Username',
+                                  labelStyle: TextStyle(color: Colors.blue),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              child: TextField(
+                                controller: _passwordController,
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  labelText: 'Password',
+                                  labelStyle: TextStyle(color: Colors.blue),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                  ),
                                 ),
                               ),
                             ),
                             Container(
                               padding: EdgeInsets.all(8.0),
                               child: TextField(
-                                controller: _passwordController,
+                                controller: _passwordConfirmationController,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Password",
-                                  hintStyle: TextStyle(color: Colors.grey[700]),
+                                  labelText: 'Confirm Password',
+                                  labelStyle: TextStyle(color: Colors.blue),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                  ),
                                 ),
                               ),
                             ),
@@ -156,47 +182,84 @@ class LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             String username = _usernameController.text;
                             String password = _passwordController.text;
+                            String passwordConfirmation =
+                                _passwordConfirmationController.text;
 
-                            final response = await request.login(
-                              "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/login/",
-                              {
-                                'username': username,
-                                'password': password,
-                              },
-                            );
+                            if (username.isEmpty ||
+                                password.isEmpty ||
+                                passwordConfirmation.isEmpty) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Error'),
+                                  content:
+                                      const Text('Please fill in all fields.'),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                              return;
+                            }
+                            if (password != passwordConfirmation) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Error'),
+                                  content: const Text(
+                                      'Register failed, password confirmation incorrect.'),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                              return;
+                            }
+                            final response = await request.post(
+                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/register/",
+                                {
+                                  'username': username,
+                                  'password': password,
+                                });
 
-                            if (request.loggedIn && context.mounted) {
+                            if (response['status']) {
                               String message = response['message'];
-                              String uname = response['username'];
+
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Home(),
-                                ),
+                                    builder: (context) => const LoginApp()),
                               );
                               ScaffoldMessenger.of(context)
                                 ..hideCurrentSnackBar()
-                                ..showSnackBar(SnackBar(
-                                    content: Text(
-                                        "$message Selamat datang, $uname.")));
+                                ..showSnackBar(
+                                    SnackBar(content: Text("$message")));
                             } else {
-                              if (context.mounted) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Login Gagal'),
-                                    content: Text(response['message']),
-                                    actions: [
-                                      TextButton(
-                                        child: const Text('OK'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Register failed.'),
+                                  content: Text(response['message']),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -208,26 +271,24 @@ class LoginPageState extends State<LoginPage> {
                               horizontal: 24.0,
                             ),
                           ),
-                          child: const Text('Login'),
+                          child: const Text('Register'),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 70,
+                      height: 12.0,
                     ),
                     FadeInUp(
                       duration: Duration(milliseconds: 2000),
                       child: GestureDetector(
                         onTap: () {
-                          // Navigate to Register Page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterPage()),
+                            MaterialPageRoute(builder: (context) => LoginApp()),
                           );
                         },
                         child: Text(
-                          "Don't have an account yet? Register now!",
+                          "Already have an account? Login now!",
                           style: TextStyle(
                             color: Colors.blue,
                           ),

@@ -7,6 +7,8 @@ class ReadingForumDetailPage extends StatelessWidget {
 
   ReadingForumDetailPage({required this.discussion});
 
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
