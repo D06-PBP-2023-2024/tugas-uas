@@ -4,14 +4,15 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/register.dart';
-//import 'package:tugas_uas/screen/register.dart';
+
+String loggedInUsername = "";
 
 void main() {
   runApp(const LoginApp());
 }
 
 class LoginApp extends StatelessWidget {
-  const LoginApp({Key? key});
+  const LoginApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class LoginApp extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key});
+  const LoginPage({super.key});
 
   @override
   LoginPageState createState() => LoginPageState();
@@ -183,7 +184,7 @@ class LoginPageState extends State<LoginPage> {
                                 showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text('Login Failed'),
+                                    title: const Text('Login Gagal'),
                                     content: Text(response['message']),
                                     actions: [
                                       TextButton(
@@ -218,9 +219,11 @@ class LoginPageState extends State<LoginPage> {
                       duration: Duration(milliseconds: 2000),
                       child: GestureDetector(
                         onTap: () {
+                          // Navigate to Register Page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RegisterPage()),
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
                           );
                         },
                         child: Text(

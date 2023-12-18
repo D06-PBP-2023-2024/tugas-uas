@@ -14,7 +14,6 @@ class ReadingForumFormPage extends StatefulWidget {
 
 class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
   final _formKey = GlobalKey<FormState>();
-  String _title = "";
   String _content = "";
 
   @override
@@ -25,7 +24,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            'Reading Discussion Form',
+            'Reply Form',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -39,34 +38,6 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Title",
-                    labelText: "Title",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _title = value ?? "";
-                    });
-                  },
-                  onSaved: (String? value) {
-                    setState(() {
-                      _title = value ?? "";
-                    });
-                  },
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "Title cannot be empty!";
-                    }
-                    return null;
-                  },
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -89,7 +60,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Discussion content cannot be empty!";
+                      return "Reply content cannot be empty!";
                     }
                     return null;
                   },
@@ -105,25 +76,21 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        print("before making request");
-                        final response = await request.post(
-                          "http://127.0.0.1:8000/reading_forum/create-discussion-flutter/",
-                          {
-                            'title': _title,
+                        final response = await request.postJson(
+                          "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/",
+                          jsonEncode(<String, String>{
                             'content': _content,
-                          },
+                          }),
                         );
-                        print("after making request");
                         if (response['status'] == 'success') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Discussion created successfully!"),
+                              content: Text("Reply created successfully!"),
                             ),
                           );
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const Home()),
+                            MaterialPageRoute(builder: (context) => Home()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(

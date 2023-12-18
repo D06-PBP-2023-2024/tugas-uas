@@ -1,21 +1,23 @@
 // To parse this JSON data, do
 //
-//     final like = likeFromJson(jsonString);
+//     final readingList = readingListFromJson(jsonString);
 
 import 'dart:convert';
 
-Like likeFromJson(String str) => Like.fromJson(json.decode(str));
+List<ReadingList> readingListFromJson(String str) =>
+    List<ReadingList>.from(json.decode(str).map((x) => ReadingList.fromJson(x)));
 
-String likeToJson(Like data) => json.encode(data.toJson());
+String readingListToJson(List<ReadingList> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Like {
+class ReadingList {
   List<Book> books;
 
-  Like({
+  ReadingList({
     required this.books,
   });
 
-  factory Like.fromJson(Map<String, dynamic> json) => Like(
+  factory ReadingList.fromJson(Map<String, dynamic> json) => ReadingList(
         books: List<Book>.from(json["books"].map((x) => Book.fromJson(x))),
       );
 

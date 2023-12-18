@@ -1,6 +1,7 @@
 import "dart:convert";
 
 import "package:flutter/material.dart";
+import "package:tugas_uas/screen/book_detail.dart";
 import "package:tugas_uas/widget/drawer.dart";
 import "package:tugas_uas/model/book.dart";
 import "package:http/http.dart" as http;
@@ -15,8 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Future<List<Book>> getBooks() async {
-    // TODO Ganti URL!!!
-    const url = "http://127.0.0.1:8000/api/books?page=all";
+    const url = "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/api/books?page=all";
     final response = await http.get(Uri.parse(url), headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
@@ -70,24 +70,36 @@ class _HomeState extends State<Home> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   padding: const EdgeInsets.all(20.0),
                   child: Card(
-                    child: Column(
-                      children: [
-                        Image.network(snapshot.data![index].fields!.coverUrl!),
-                        ListTile(
-                          title: Text(
-                            (snapshot.data![index].fields?.title ??
-                                    "loh kok ga ada")
-                                .toTitleCase(),
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return BookDetail(
+                              id: snapshot.data![index].pk!,
+                            );
+                          },
+                        ));
+                      },
+                      child: Column(
+                        children: [
+                          Image.network(
+                              snapshot.data![index].fields!.coverUrl!),
+                          ListTile(
+                            title: Text(
+                              (snapshot.data![index].fields?.title ??
+                                      "loh kok ga ada")
+                                  .toTitleCase(),
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
+                            // subtitle: Text(snapshot.data![index].fields?.author ??
+                            // "Tidak ada penulis"),
                           ),
-                          // subtitle: Text(snapshot.data![index].fields?.author ??
-                          // "Tidak ada penulis"),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
