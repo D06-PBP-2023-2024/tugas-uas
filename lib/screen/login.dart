@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/register.dart';
 
+String loggedInUsername = "";
+
 void main() {
   runApp(const LoginApp());
 }
@@ -220,7 +222,8 @@ class LoginPageState extends State<LoginPage> {
                           // Navigate to Register Page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RegisterPage()),
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
                           );
                         },
                         child: Text(

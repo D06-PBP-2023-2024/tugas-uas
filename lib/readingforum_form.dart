@@ -101,17 +101,19 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.orange),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        final response = await request.postJson(
-                          "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/",
-                          jsonEncode(<String, String>{
+                        print("before making request");
+                        final response = await request.post(
+                          "http://127.0.0.1:8000/reading_forum/create-discussion-flutter/",
+                          {
                             'title': _title,
                             'content': _content,
-                          }),
+                          },
                         );
+                        print("after making request");
                         if (response['status'] == 'success') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
