@@ -111,6 +111,7 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.search),
             title: const Text("Filter Search"),
             onTap: () {
               Navigator.push(
