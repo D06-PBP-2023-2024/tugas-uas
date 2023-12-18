@@ -186,12 +186,15 @@ class _RegisterPageState extends State<RegisterPage> {
                             String passwordConfirmation =
                                 _passwordConfirmationController.text;
 
-                            if (username.isEmpty || password.isEmpty || passwordConfirmation.isEmpty) {
+                            if (username.isEmpty ||
+                                password.isEmpty ||
+                                passwordConfirmation.isEmpty) {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
                                   title: const Text('Error'),
-                                  content: const Text('Please fill in all fields.'),
+                                  content:
+                                      const Text('Please fill in all fields.'),
                                   actions: [
                                     TextButton(
                                       child: const Text('OK'),
@@ -209,7 +212,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 context: context,
                                 builder: (context) => AlertDialog(
                                   title: const Text('Error'),
-                                  content: const Text('Register failed, password confirmation incorrect.'),
+                                  content: const Text(
+                                      'Register failed, password confirmation incorrect.'),
                                   actions: [
                                     TextButton(
                                       child: const Text('OK'),
@@ -223,10 +227,11 @@ class _RegisterPageState extends State<RegisterPage> {
                               return;
                             }
                             final response = await request.post(
-                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/register/", {
-                              'username': username,
-                              'password': password,
-                            });
+                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/register/",
+                                {
+                                  'username': username,
+                                  'password': password,
+                                });
 
                             if (response['status']) {
                               String message = response['message'];
