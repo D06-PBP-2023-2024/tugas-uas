@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 import 'package:tugas_uas/widget/like.dart';
 import 'package:tugas_uas/widget/comment.dart';
@@ -53,7 +56,33 @@ class Profile extends StatelessWidget {
                               child: const Text('Update Profile')),
                           const SizedBox(width: 10),
                           ElevatedButton(
-                              onPressed: () {}, child: const Text('Log Out')),
+                              onPressed: () async {
+                                final request = Provider.of<CookieRequest>(
+                                    context,
+                                    listen: false);
+                                final response = await request.logout(
+                                    "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                                String message = response["message"];
+                                if (response['status']) {
+                                  String uname = response["username"];
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content:
+                                        Text("$message Sampai jumpa, $uname."),
+                                  ));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const LoginApp()),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("$message"),
+                                  ));
+                                }
+                              },
+                              child: const Text('Log Out')),
                         ],
                       ),
                     ],
