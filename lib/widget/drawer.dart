@@ -41,6 +41,18 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.forum_outlined),
+            title: const Text("Reading Forum"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReadingForumPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.account_circle_outlined),
             title: const Text('Profile'),
             onTap: () {
@@ -84,17 +96,6 @@ class SideDrawer extends StatelessWidget {
                   content: Text("$message"),
                 ));
               }
-            },
-          ),
-          ListTile(
-            title: const Text("Reading Forum"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ReadingForumPage(),
-                ),
-              );
             },
           ),
         ],
