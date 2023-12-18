@@ -36,12 +36,12 @@ class Profile {
 
 class Fields {
   int user;
-  String firstName;
-  String lastName;
-  String email;
-  String phoneNumber;
-  String domicile;
-  String username;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phoneNumber;
+  String? domicile;
+  String? username;
 
   Fields({
     required this.user,

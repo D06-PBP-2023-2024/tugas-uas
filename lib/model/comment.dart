@@ -4,54 +4,50 @@
 
 import 'dart:convert';
 
-List<Comment> commentFromJson(String str) => List<Comment>.from(json.decode(str).map((x) => Comment.fromJson(x)));
+Comment commentFromJson(String str) => Comment.fromJson(json.decode(str));
 
-String commentToJson(List<Comment> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String commentToJson(Comment data) => json.encode(data.toJson());
 
 class Comment {
-    String model;
-    int pk;
-    Fields fields;
+    List<Book> books;
 
     Comment({
-        required this.model,
-        required this.pk,
-        required this.fields,
+        required this.books,
     });
 
     factory Comment.fromJson(Map<String, dynamic> json) => Comment(
-        model: json["model"],
-        pk: json["pk"],
-        fields: Fields.fromJson(json["fields"]),
+        books: List<Book>.from(json["books"].map((x) => Book.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "model": model,
-        "pk": pk,
-        "fields": fields.toJson(),
+        "books": List<dynamic>.from(books.map((x) => x.toJson())),
     };
 }
 
-class Fields {
-    int user;
-    int book;
+class Book {
+    String title;
+    String coverUrl;
+    String author;
     String comment;
 
-    Fields({
-        required this.user,
-        required this.book,
+    Book({
+        required this.title,
+        required this.coverUrl,
+        required this.author,
         required this.comment,
     });
 
-    factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        user: json["user"],
-        book: json["book"],
+    factory Book.fromJson(Map<String, dynamic> json) => Book(
+        title: json["title"],
+        coverUrl: json["cover_url"],
+        author: json["author"],
         comment: json["comment"],
     );
 
     Map<String, dynamic> toJson() => {
-        "user": user,
-        "book": book,
+        "title": title,
+        "cover_url": coverUrl,
+        "author": author,
         "comment": comment,
     };
 }

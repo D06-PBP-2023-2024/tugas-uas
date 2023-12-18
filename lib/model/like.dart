@@ -4,50 +4,46 @@
 
 import 'dart:convert';
 
-List<Like> likeFromJson(String str) => List<Like>.from(json.decode(str).map((x) => Like.fromJson(x)));
+Like likeFromJson(String str) => Like.fromJson(json.decode(str));
 
-String likeToJson(List<Like> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String likeToJson(Like data) => json.encode(data.toJson());
 
 class Like {
-    String model;
-    int pk;
-    Fields fields;
+    List<Book> books;
 
     Like({
-        required this.model,
-        required this.pk,
-        required this.fields,
+        required this.books,
     });
 
     factory Like.fromJson(Map<String, dynamic> json) => Like(
-        model: json["model"],
-        pk: json["pk"],
-        fields: Fields.fromJson(json["fields"]),
+        books: List<Book>.from(json["books"].map((x) => Book.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "model": model,
-        "pk": pk,
-        "fields": fields.toJson(),
+        "books": List<dynamic>.from(books.map((x) => x.toJson())),
     };
 }
 
-class Fields {
-    int user;
-    int book;
+class Book {
+    String title;
+    String coverUrl;
+    String author;
 
-    Fields({
-        required this.user,
-        required this.book,
+    Book({
+        required this.title,
+        required this.coverUrl,
+        required this.author,
     });
 
-    factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        user: json["user"],
-        book: json["book"],
+    factory Book.fromJson(Map<String, dynamic> json) => Book(
+        title: json["title"],
+        coverUrl: json["cover_url"],
+        author: json["author"],
     );
 
     Map<String, dynamic> toJson() => {
-        "user": user,
-        "book": book,
+        "title": title,
+        "cover_url": coverUrl,
+        "author": author,
     };
 }

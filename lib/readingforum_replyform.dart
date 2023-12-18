@@ -28,7 +28,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       drawer: const SideDrawer(),
@@ -38,7 +38,6 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -73,7 +72,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.orange),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -96,7 +95,8 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("An error occurred, please try again."),
+                              content:
+                                  Text("An error occurred, please try again."),
                             ),
                           );
                         }
