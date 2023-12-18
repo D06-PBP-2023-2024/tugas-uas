@@ -64,7 +64,16 @@ class _SearchByState extends State<SearchBy> {
           ),
           title: Text('Books by Tag'),
         ),
-        body: isLoading ? const Center(child: CircularProgressIndicator()):
+        body: isLoading ? const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16), // Adding some space between the CircularProgressIndicator and the text
+            Text('Loading data...'),
+          ],
+        ),
+      ):
         ListView.builder(
           itemCount: booksByTag.length,
           itemBuilder: (context, index) {
