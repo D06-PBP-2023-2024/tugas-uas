@@ -4,6 +4,7 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/register.dart';
+
 String loggedInUsername = "";
 
 void main() {

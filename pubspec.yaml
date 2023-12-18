@@ -38,6 +38,7 @@ dependencies:
   http: ^1.1.0
   pbp_django_auth: ^0.4.0
   animate_do: ^3.1.2
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
