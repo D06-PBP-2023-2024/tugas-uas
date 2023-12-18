@@ -107,7 +107,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                       if (_formKey.currentState!.validate()) {
                         print("before making request");
                         final response = await request.post(
-                          "http://127.0.0.1:8000/reading_forum/create-discussion-flutter/",
+                          "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create-discussion-flutter/",
                           {
                             'title': _title,
                             'content': _content,
