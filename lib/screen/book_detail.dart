@@ -101,6 +101,32 @@ class BookDetail extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Wrap(
+                            direction: Axis.horizontal,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: snapshot.data!.tags!.map((tag) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                margin: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    tag.subject!.toTitleCase(),
+                                    style: const TextStyle(
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ],
                     ),
                   );
