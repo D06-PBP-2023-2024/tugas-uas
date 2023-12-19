@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
+import 'package:tugas_uas/screen/readingforum_page.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
-class ReadingForumFormPage extends StatefulWidget {
-  const ReadingForumFormPage({Key? key}) : super(key: key);
+class ReplyForm extends StatefulWidget {
+  const ReplyForm({Key? key}) : super(key: key);
 
   @override
-  State<ReadingForumFormPage> createState() => _ReadingForumFormPageState();
+  State<ReplyForm> createState() => _ReplyFormState();
 }
 
-class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
+class _ReplyFormState extends State<ReplyForm> {
   final _formKey = GlobalKey<FormState>();
   String _content = "";
 
@@ -77,12 +78,12 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.postJson(
-                          "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/",
+                          'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create_reply_flutter/',
                           jsonEncode(<String, String>{
                             'content': _content,
                           }),
                         );
-                        if (response['status'] == 'success') {
+                        if (response['success'] == 'Discussion created successfully.') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Reply created successfully!"),
@@ -90,7 +91,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                           );
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => Home()),
+                            MaterialPageRoute(builder: (context) => ReadingForumPage()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -103,7 +104,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                       }
                     },
                     child: const Text(
-                      "Submit",
+                      "Reply",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

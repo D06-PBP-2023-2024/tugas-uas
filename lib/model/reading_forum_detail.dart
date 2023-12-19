@@ -13,7 +13,7 @@ class ReadingForumDetail {
     String title;
     String createdAt;
     String content;
-    User user;
+    String user;
     List<Reply> replies;
 
     ReadingForumDetail({
@@ -30,7 +30,7 @@ class ReadingForumDetail {
         title: json["title"],
         createdAt: json["created_at"],
         content: json["content"],
-        user: userValues.map[json["user"]]!,
+        user: json["user"],
         replies: List<Reply>.from(json["replies"].map((x) => Reply.fromJson(x))),
     );
 
@@ -39,7 +39,7 @@ class ReadingForumDetail {
         "title": title,
         "created_at": createdAt,
         "content": content,
-        "user": userValues.reverse[user],
+        "user": [user],
         "replies": List<dynamic>.from(replies.map((x) => x.toJson())),
     };
 }
@@ -48,7 +48,7 @@ class Reply {
     int pk;
     String createdAt;
     String content;
-    User user;
+    String user;
 
     Reply({
         required this.pk,
@@ -61,35 +61,15 @@ class Reply {
         pk: json["pk"],
         createdAt: json["created_at"],
         content: json["content"],
-        user: userValues.map[json["user"]]!,
+        user: json["user"],
     );
 
     Map<String, dynamic> toJson() => {
         "pk": pk,
         "created_at": createdAt,
         "content": content,
-        "user": userValues.reverse[user],
+        "user":user,
     };
 }
 
-enum User {
-    SYIFA,
-    SYIFO
-}
 
-final userValues = EnumValues({
-    "syifa": User.SYIFA,
-    "syifo": User.SYIFO
-});
-
-class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
-
-    EnumValues(this.map);
-
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }
-}
