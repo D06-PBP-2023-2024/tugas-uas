@@ -15,7 +15,7 @@
 
 ## Aplikasi 🌐
 KindleKids 📖
-
+[Download APK](https://install.appcenter.ms/orgs/d06/apps/kindle-kids/distribution_groups/public)
 ---
 
 ## Fungsi Aplikasi ℹ️
