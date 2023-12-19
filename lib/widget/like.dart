@@ -33,10 +33,13 @@ class _LikeWidgetState extends State<LikeWidget> {
             final response = await http.post(
               Uri.parse(
                   'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/like-flutter/${widget.id}/'),
+              headers: {
+                'Content-Type': 'application/json',
+              },
             );
             if (response.statusCode == 200) {
               _toggleLike();
-              // return json.decode(response.body);
+              return json.decode(response.body);
             } else {
               throw Exception(
                   'Failed to like book. Status code: ${response.statusCode}');

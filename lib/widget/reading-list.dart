@@ -31,13 +31,16 @@ class _ReadingListState extends State<ReadingList> {
             backgroundColor: MaterialStateProperty.all(Colors.blue),
           ),
           onPressed: () async {
-            final response = await http.post(
+            var response = await http.post(
               Uri.parse(
                   'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/readinglist-flutter/${widget.id}/'),
+              headers: {
+                'Content-Type': 'application/json',
+              },
             );
             if (response.statusCode == 200) {
               _toggleLike();
-              // return json.decode(response.body);
+              return json.decode(response.body);
             } else {
               throw Exception(
                   'Failed to like book. Status code: ${response.statusCode}');
