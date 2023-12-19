@@ -4,11 +4,11 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class CommentPage extends StatefulWidget {
-  final Key? key;
+  final int id;
+  const CommentPage({Key? key, required this.id}) : super(key: key);
+
   @override
   _CommentPageState createState() => _CommentPageState();
-
-  const CommentPage({this.key}) : super(key: key);
 }
 
 class _CommentPageState extends State<CommentPage> {
@@ -65,7 +65,7 @@ class _CommentPageState extends State<CommentPage> {
                   if (_formKey.currentState!.validate()) {
                     print("before making request");
                     final response = await request.post(
-                      "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/main/comment-flutter/",
+                      "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/main/comment-flutter/${widget.id}",
                       {
                         'comment': _comment,
                       },

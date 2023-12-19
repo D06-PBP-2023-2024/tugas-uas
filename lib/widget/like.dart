@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LikeWidget extends StatefulWidget {
-  // final int id;
+  final int id;
+  const LikeWidget({Key? key, required this.id}) : super(key: key);
 
   @override
   _LikeWidgetState createState() => _LikeWidgetState();
-  const LikeWidget({super.key});
 }
 
 class _LikeWidgetState extends State<LikeWidget> {
@@ -35,7 +35,7 @@ class _LikeWidgetState extends State<LikeWidget> {
           ),
           onPressed: _toggleLike,
         ),
-        Text('$likeCount Likes'),
+        Text('Likes'),
       ],
     );
   }

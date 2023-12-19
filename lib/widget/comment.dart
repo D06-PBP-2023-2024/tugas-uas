@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tugas_uas/screen/comment_page.dart';
 
 class CommentButton extends StatefulWidget {
-  // final int id;
+  final int id;
 
-  const CommentButton({super.key});
+  const CommentButton({Key? key, required this.id}) : super(key: key);
 
   @override
   _CommentButtonState createState() => _CommentButtonState();
@@ -19,7 +19,8 @@ class _CommentButtonState extends State<CommentButton> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const CommentPage()),
+              MaterialPageRoute(
+                  builder: (context) => CommentPage(id: widget.id)),
             );
           },
           icon: const Icon(Icons.comment), // Replace with the desired icon

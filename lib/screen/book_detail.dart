@@ -132,13 +132,13 @@ class BookDetail extends StatelessWidget {
                         ),
                         Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: LikeWidget()),
+                            child: LikeWidget(id: id)),
                         Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: CommentButton()),
+                            child: CommentButton(id: id)),
                         Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ReadingList()),
+                            child: ReadingList(id: id)),
                       ],
                     ),
                   );
