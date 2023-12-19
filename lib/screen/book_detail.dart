@@ -6,24 +6,29 @@ import "package:tugas_uas/model/book_detail.dart";
 import "package:tugas_uas/screen/tag_form.dart";
 import "package:tugas_uas/utils/titlecase.dart";
 import "package:tugas_uas/widget/drawer.dart";
-import "package:tugas_uas/widget/like.dart";
-import "package:tugas_uas/widget/comment.dart";
-import "package:tugas_uas/widget/reading-list.dart";
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class BookDetail extends StatelessWidget {
+class BookDetail extends StatefulWidget {
   const BookDetail({super.key, required this.id});
   final int id;
 
+  @override
+  State<BookDetail> createState() => _BookDetailState();
+}
+
+class _BookDetailState extends State<BookDetail> {
+  bool liked = false;
   Future<Book> getBook() async {
-    var url = "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/api/books/$id";
+    var url =
+        "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/api/books/${widget.id}";
     final response = await http.get(Uri.parse(url), headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
     });
     var data = jsonDecode(utf8.decode(response.bodyBytes));
-    return Book.fromJson(data);
+    var j = Book.fromJson(data);
+    return j;
   }
 
   @override
@@ -72,7 +77,7 @@ class BookDetail extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.favorite),
+                            const Icon(Icons.favorite_border_outlined),
                             Text(
                               snapshot.data!.likes!.length.toString(),
                               style: const TextStyle(
@@ -136,15 +141,6 @@ class BookDetail extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: LikeWidget(id: id)),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CommentButton(id: id)),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ReadingList(id: id)),
                         (request.loggedIn
                             ? Container(
                                 margin: const EdgeInsets.all(8),
@@ -154,7 +150,7 @@ class BookDetail extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              TagFormPage(id: id),
+                                              TagFormPage(id: widget.id),
                                         ),
                                       );
                                     },
@@ -173,23 +169,8 @@ class BookDetail extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     )),
                               )
-                            : const Text("Log in untuk menambahkan tag")),
-                        // const Padding(
-                        //     padding: EdgeInsets.all(8.0), child: LikeWidget()),
-                        // const Padding(
-                        //     padding: EdgeInsets.all(8.0),
-                        //     child: CommentButton()),
-                        // const Padding(
-                        //     padding: EdgeInsets.all(8.0), child: ReadingList()),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: LikeWidget(id: id)),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CommentButton(id: id)),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ReadingList(id: id)),
+                            : const Text(
+                                "Log in untuk mengakses fitur secara penuh")),
                       ],
                     ),
                   );
