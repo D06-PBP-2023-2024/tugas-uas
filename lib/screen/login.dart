@@ -168,6 +168,7 @@ class LoginPageState extends State<LoginPage> {
                             if (request.loggedIn && context.mounted) {
                               String message = response['message'];
                               String uname = response['username'];
+                              loggedInUsername = uname;
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

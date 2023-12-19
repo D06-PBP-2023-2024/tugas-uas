@@ -1,5 +1,9 @@
 # Proyek Akhir Semester - Kindle Kids 📝
 ## Kelompok D06 👨‍👨‍👧‍👧
+![staging](https://github.com/D06-PBP-2023-2024/tugas-uas/actions/workflows/staging.yml/badge.svg)
+![pre-release](https://github.com/D06-PBP-2023-2024/tugas-uas/actions/workflows/pre-release.yml/badge.svg)
+![release](https://github.com/D06-PBP-2023-2024/tugas-uas/actions/workflows/release.yml/badge.svg)
+[![Build status](https://build.appcenter.ms/v0.1/apps/aa20e829-3f86-4f93-8bb9-8d55dc5d1592/branches/main/badge)](https://appcenter.ms)
 - 2206081521 - Juan Dharmananda Khusuma
 - 2206081673 - Rachel Mathilda
 - 2206081660 - Rifda Aulia Nurbahri
