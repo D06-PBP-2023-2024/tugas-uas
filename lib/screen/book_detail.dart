@@ -4,6 +4,9 @@ import "package:flutter/material.dart";
 import "package:tugas_uas/model/book_detail.dart";
 import "package:tugas_uas/utils/titlecase.dart";
 import "package:tugas_uas/widget/drawer.dart";
+import "package:tugas_uas/widget/like.dart";
+import "package:tugas_uas/widget/comment.dart";
+import "package:tugas_uas/widget/reading-list.dart";
 import 'package:http/http.dart' as http;
 
 class BookDetail extends StatelessWidget {
@@ -127,6 +130,15 @@ class BookDetail extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: LikeWidget()),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommentButton()),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ReadingList()),
                       ],
                     ),
                   );

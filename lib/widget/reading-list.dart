@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ReadingList extends StatefulWidget {
-  final Key? key;
+  // final int id;
+
+  const ReadingList({super.key});
 
   @override
   _ReadingListState createState() => _ReadingListState();
-  const ReadingList({this.key}) : super(key: key);
 }
 
 class _ReadingListState extends State<ReadingList> {
