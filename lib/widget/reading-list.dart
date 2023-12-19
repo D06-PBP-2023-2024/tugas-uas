@@ -37,7 +37,7 @@ class _ReadingListState extends State<ReadingList> {
             );
             if (response.statusCode == 200) {
               _toggleLike();
-              return json.decode(response.body);
+              // return json.decode(response.body);
             } else {
               throw Exception(
                   'Failed to like book. Status code: ${response.statusCode}');
