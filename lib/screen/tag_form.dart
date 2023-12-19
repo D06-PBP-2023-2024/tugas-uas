@@ -42,7 +42,7 @@ class _TagFormPageState extends State<TagFormPage> {
               onPressed: () async {
                 http.post(
                   Uri.parse(
-                      "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/api/books/${widget.id}/tags"),
+                      "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/create-tag-flutter/${widget.id}"),
                   headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
