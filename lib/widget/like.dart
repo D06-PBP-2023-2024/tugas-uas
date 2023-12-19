@@ -7,10 +7,10 @@ class LikeWidget extends StatefulWidget {
   const LikeWidget({Key? key, required this.id}) : super(key: key);
 
   @override
-  _LikeWidgetState createState() => _LikeWidgetState();
+  LikeWidgetState createState() => LikeWidgetState();
 }
 
-class _LikeWidgetState extends State<LikeWidget> {
+class LikeWidgetState extends State<LikeWidget> {
   bool isLiked = false;
 
   void _toggleLike() {

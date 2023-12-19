@@ -83,7 +83,8 @@ class _ReplyFormState extends State<ReplyForm> {
                           }),
                         );
                         if (response['success'] ==
-                            'Discussion created successfully.') {
+                                'Discussion created successfully.' &&
+                            context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Reply created successfully!"),
@@ -92,9 +93,9 @@ class _ReplyFormState extends State<ReplyForm> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ReadingForumPage()),
+                                builder: (context) => const ReadingForumPage()),
                           );
-                        } else {
+                        } else if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content:

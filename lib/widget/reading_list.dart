@@ -8,10 +8,10 @@ class ReadingList extends StatefulWidget {
   const ReadingList({Key? key, required this.id}) : super(key: key);
 
   @override
-  _ReadingListState createState() => _ReadingListState();
+  ReadingListState createState() => ReadingListState();
 }
 
-class _ReadingListState extends State<ReadingList> {
+class ReadingListState extends State<ReadingList> {
   bool isAdded = false;
 
   void _toggleLike() {

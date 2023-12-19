@@ -7,11 +7,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ReadingForumPage extends StatefulWidget {
+  const ReadingForumPage({super.key});
+
   @override
-  _ReadingForumPageState createState() => _ReadingForumPageState();
+  ReadingForumPageState createState() => ReadingForumPageState();
 }
 
-class _ReadingForumPageState extends State<ReadingForumPage> {
+class ReadingForumPageState extends State<ReadingForumPage> {
   late List<Discussion> discussions;
 
   @override
@@ -34,15 +36,15 @@ class _ReadingForumPageState extends State<ReadingForumPage> {
         // Parse respons JSON dan kembalikan daftar diskusi
         var data = json.decode(utf8.decode(response.bodyBytes));
 
-        List<Discussion> list_discussion = [];
+        List<Discussion> listDiscussion = [];
         for (var d in data['discussions']) {
           if (d != null) {
-            list_discussion.add(Discussion.fromJson(d));
+            listDiscussion.add(Discussion.fromJson(d));
           }
         }
 
         setState(() {
-          discussions = list_discussion;
+          discussions = listDiscussion;
         });
       } else {
         // Jika server tidak mengembalikan respons 200 OK,
@@ -51,8 +53,7 @@ class _ReadingForumPageState extends State<ReadingForumPage> {
       }
     } catch (e) {
       // Tangani kesalahan yang terjadi selama permintaan HTTP.
-      print('Error fetching discussions: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -81,7 +82,7 @@ class _ReadingForumPageState extends State<ReadingForumPage> {
             ),
             const SizedBox(height: 16),
             if (discussions.isEmpty)
-              Text('No discussions yet.')
+              const Text('No discussions yet.')
             else
               Expanded(
                 child: ListView.builder(
