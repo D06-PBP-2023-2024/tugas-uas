@@ -21,13 +21,8 @@ class App extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-<<<<<<< HEAD
-        // home: LoginPage(),
-        home: Home(),
-=======
         home: LoginPage(),
         // home: Home(),
->>>>>>> a914fb27e3d656b3b90d9c2dd50b9036341f4449
       ),
     );
   }
