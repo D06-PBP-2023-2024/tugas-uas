@@ -19,7 +19,7 @@ class _CommentButtonState extends State<CommentButton> {
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton.icon(
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => CommentPage(id: widget.id)),
