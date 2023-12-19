@@ -5,6 +5,7 @@ import 'package:tugas_uas/model/reading_forum.dart';
 import 'package:tugas_uas/model/reading_forum_detail.dart';
 import 'package:tugas_uas/readingforum_replyform.dart';
 import 'package:tugas_uas/readingforum_replyform.dart';
+import 'package:tugas_uas/widget/drawer.dart';
 
 class ReadingForumDetailPage extends StatefulWidget {
   final Discussion discussion;
@@ -26,7 +27,7 @@ class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
 
   Future<void> fetchReplies() async {
     var url = Uri.parse(
-        'http://127.0.0.1:8000/reading_forum/discussion_detail_json/${widget.discussion.id}');
+        'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/discussion_detail_json/${widget.discussion.id}');
 
     try {
       final response = await http.get(url);
@@ -54,58 +55,65 @@ class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Discussion Detail'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Title: ${widget.discussion.title}',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Discussion Detail'),
+    ),
+    drawer : const SideDrawer(),
+    body: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Title: ${widget.discussion.title}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Content: ${widget.discussion.content}'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('By: ${widget.discussion.user}'),
-            ),
-            if (replies == null)
-              const Center(child: CircularProgressIndicator())
-            else
-              for (var reply in replies)
-                Card(
-                  child: ListTile(
-                    title: Text(reply.content),
-                    subtitle: Text('By: ${reply.user}'),
-                  ),
-                ),
-            
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReplyForm(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Content: ${widget.discussion.content}'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('By: ${widget.discussion.user}'),
+          ),
+          if (replies.isEmpty)
+            const Center(child: CircularProgressIndicator())
+          else
+            Expanded(
+              child: ListView.builder(
+                itemCount: replies.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(replies[index].content),
+                      subtitle: Text('By: ${replies[index].user}'),
                     ),
                   );
                 },
-                child: Text('Reply'),
               ),
             ),
-          ],
-        ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReplyForm(),
+                  ),
+                );
+              },
+              child: const Text('Reply'),
+            ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
