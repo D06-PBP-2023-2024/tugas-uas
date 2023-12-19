@@ -6,6 +6,9 @@ import "package:tugas_uas/model/book_detail.dart";
 import "package:tugas_uas/screen/tag_form.dart";
 import "package:tugas_uas/utils/titlecase.dart";
 import "package:tugas_uas/widget/drawer.dart";
+import "package:tugas_uas/widget/like.dart";
+import "package:tugas_uas/widget/comment.dart";
+import "package:tugas_uas/widget/reading-list.dart";
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -162,6 +165,22 @@ class BookDetail extends StatelessWidget {
                                     )),
                               )
                             : const Text("Log in untuk menambahkan tag")),
+                        const Padding(
+                            padding: EdgeInsets.all(8.0), child: LikeWidget()),
+                        const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: CommentButton()),
+                        const Padding(
+                            padding: EdgeInsets.all(8.0), child: ReadingList()),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: LikeWidget(id: id)),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommentButton(id: id)),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ReadingList(id: id)),
                       ],
                     ),
                   );
