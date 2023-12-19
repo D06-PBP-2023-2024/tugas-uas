@@ -40,7 +40,7 @@ class _TagFormPageState extends State<TagFormPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                http.post(
+                final response = await http.post(
                   Uri.parse(
                       "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/create-tag-flutter/${widget.id}"),
                   headers: {
@@ -48,9 +48,19 @@ class _TagFormPageState extends State<TagFormPage> {
                     "Content-Type": "application/json",
                   },
                   body: jsonEncode(<String, String>{
-                    "subject": "subject",
+                    "subject": subject,
                   }),
                 );
+                final dynamic success = jsonDecode(response.body)["success"];
+                if (success == true) {
+                  Navigator.pop(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Failed to add tag!"),
+                    ),
+                  );
+                }
               },
               child: const Text("Submit"),
             ),
