@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:tugas_uas/model/reading_forum.dart';
 import 'package:tugas_uas/model/reading_forum_detail.dart';
 import 'package:tugas_uas/readingforum_replyform.dart';
-import 'package:tugas_uas/readingforum_replyform.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
 class ReadingForumDetailPage extends StatefulWidget {
