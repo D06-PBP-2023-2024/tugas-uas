@@ -1,26 +1,30 @@
 // To parse this JSON data, do
 //
-//     final bookDetail = bookDetailFromJson(jsonString);
+//     final book = bookFromJson(jsonString);
 
 import 'dart:convert';
 
-Book bookDetailFromJson(String str) => Book.fromJson(json.decode(str));
+Book bookFromJson(String str) => Book.fromJson(json.decode(str));
 
-String bookDetailToJson(Book data) => json.encode(data.toJson());
+String bookToJson(Book data) => json.encode(data.toJson());
 
 class Book {
   int? id;
-  Fields? fields;
+  String? title;
+  String? author;
+  String? coverUrl;
   int? downloadCount;
   String? content;
   List<Tag>? tags;
   List<Like>? likes;
   List<Comment>? comments;
-  List<dynamic>? readingList;
+  List<int>? readingList;
 
   Book({
     this.id,
-    this.fields,
+    this.title,
+    this.author,
+    this.coverUrl,
     this.downloadCount,
     this.content,
     this.tags,
@@ -31,7 +35,9 @@ class Book {
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
         id: json["id"],
-        fields: json["fields"] == null ? null : Fields.fromJson(json["fields"]),
+        title: json["title"],
+        author: json["author"],
+        coverUrl: json["cover_url"],
         downloadCount: json["download_count"],
         content: json["content"],
         tags: json["tags"] == null
@@ -46,12 +52,14 @@ class Book {
                 json["comments"]!.map((x) => Comment.fromJson(x))),
         readingList: json["reading_list"] == null
             ? []
-            : List<dynamic>.from(json["reading_list"]!.map((x) => x)),
+            : List<int>.from(json["reading_list"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "fields": fields?.toJson(),
+        "title": title,
+        "author": author,
+        "cover_url": coverUrl,
         "download_count": downloadCount,
         "content": content,
         "tags": tags == null
@@ -90,30 +98,6 @@ class Comment {
         "id": id,
         "user": user,
         "comment": comment,
-      };
-}
-
-class Fields {
-  String? title;
-  String? author;
-  String? coverUrl;
-
-  Fields({
-    this.title,
-    this.author,
-    this.coverUrl,
-  });
-
-  factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        title: json["title"],
-        author: json["author"],
-        coverUrl: json["cover_url"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "author": author,
-        "cover_url": coverUrl,
       };
 }
 

@@ -24,13 +24,13 @@ class RegisterApp extends StatelessWidget {
 }
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key});
+  const RegisterPage({super.key});
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  RegisterPageState createState() => RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmationController =
@@ -42,264 +42,262 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 425,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/background.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: FadeInUp(
-                        duration: Duration(milliseconds: 1600),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 360),
-                          child: Center(
-                            child: Text(
-                              "Register",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 425,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/background.png'),
+                  fit: BoxFit.fill,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(30),
-                child: Column(
-                  children: <Widget>[
-                    FadeInUp(
-                      duration: Duration(milliseconds: 1800),
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    child: FadeInUp(
+                      duration: const Duration(milliseconds: 1600),
                       child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(35),
-                          border: Border.all(
-                            color: Colors.blue,
+                        margin: const EdgeInsets.only(top: 360),
+                        child: const Center(
+                          child: Text(
+                            "Register",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(143, 148, 251, .2),
-                              blurRadius: 20.0,
-                              offset: Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              child: TextField(
-                                controller: _usernameController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: 'Username',
-                                  labelStyle: TextStyle(color: Colors.blue),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              child: TextField(
-                                controller: _passwordController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: 'Password',
-                                  labelStyle: TextStyle(color: Colors.blue),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextField(
-                                controller: _passwordConfirmationController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: 'Confirm Password',
-                                  labelStyle: TextStyle(color: Colors.blue),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    FadeInUp(
-                      duration: Duration(milliseconds: 1900),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromRGBO(143, 148, 251, 1),
-                              Color.fromRGBO(143, 148, 251, .6),
-                            ],
-                          ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                children: <Widget>[
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1800),
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(35),
+                        border: Border.all(
+                          color: Colors.blue,
                         ),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            String username = _usernameController.text;
-                            String password = _passwordController.text;
-                            String passwordConfirmation =
-                                _passwordConfirmationController.text;
-
-                            if (username.isEmpty ||
-                                password.isEmpty ||
-                                passwordConfirmation.isEmpty) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text('Error'),
-                                  content:
-                                      const Text('Please fill in all fields.'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromRGBO(143, 148, 251, .2),
+                            blurRadius: 20.0,
+                            offset: Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.blue,
                                 ),
-                              );
-                              return;
-                            }
-                            if (password != passwordConfirmation) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text('Error'),
-                                  content: const Text(
-                                      'Register failed, password confirmation incorrect.'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                              return;
-                            }
-                            final response = await request.post(
-                                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/register/",
-                                {
-                                  'username': username,
-                                  'password': password,
-                                });
-
-                            if (response['status']) {
-                              String message = response['message'];
-
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginApp()),
-                              );
-                              ScaffoldMessenger.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(
-                                    SnackBar(content: Text("$message")));
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text('Register failed.'),
-                                  content: Text(response['message']),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
+                              ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12.0,
-                              horizontal: 24.0,
+                            child: TextField(
+                              controller: _usernameController,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Username',
+                                labelStyle: TextStyle(color: Colors.blue),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                ),
+                              ),
                             ),
                           ),
-                          child: const Text('Register'),
-                        ),
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            child: TextField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Password',
+                                labelStyle: TextStyle(color: Colors.blue),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: _passwordConfirmationController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Confirm Password',
+                                labelStyle: TextStyle(color: Colors.blue),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 12.0,
-                    ),
-                    FadeInUp(
-                      duration: Duration(milliseconds: 2000),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginApp()),
-                          );
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1900),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromRGBO(143, 148, 251, 1),
+                            Color.fromRGBO(143, 148, 251, .6),
+                          ],
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          String username = _usernameController.text;
+                          String password = _passwordController.text;
+                          String passwordConfirmation =
+                              _passwordConfirmationController.text;
+
+                          if (username.isEmpty ||
+                              password.isEmpty ||
+                              passwordConfirmation.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Error'),
+                                content:
+                                    const Text('Please fill in all fields.'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                            return;
+                          }
+                          if (password != passwordConfirmation) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Error'),
+                                content: const Text(
+                                    'Register failed, password confirmation incorrect.'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                            return;
+                          }
+                          final response = await request.post(
+                              "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/register/",
+                              {
+                                'username': username,
+                                'password': password,
+                              });
+
+                          if (response['status'] && context.mounted) {
+                            String message = response['message'];
+
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginApp()),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(SnackBar(content: Text(message)));
+                          } else if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Register failed.'),
+                                content: Text(response['message']),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         },
-                        child: Text(
-                          "Already have an account? Login now!",
-                          style: TextStyle(
-                            color: Colors.blue,
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12.0,
+                            horizontal: 24.0,
+                          ),
+                        ),
+                        child: const Text('Register'),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 2000),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginApp()),
+                        );
+                      },
+                      child: const Text(
+                        "Already have an account? Login now!",
+                        style: TextStyle(
+                          color: Colors.blue,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
