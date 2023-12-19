@@ -47,7 +47,7 @@ class SideDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ReadingForumPage(),
+                  builder: (context) => const ReadingForumPage(),
                 ),
               );
             },
@@ -93,7 +93,7 @@ class SideDrawer extends StatelessWidget {
                     final response = await request.logout(
                         "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
                     String message = response["message"];
-                    if (response['status']) {
+                    if (response['status'] && context.mounted) {
                       String uname = response["username"];
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("$message See you again, $uname!"),
@@ -103,9 +103,9 @@ class SideDrawer extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => const LoginPage()),
                       );
-                    } else {
+                    } else if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("$message"),
+                        content: Text(message),
                       ));
                     }
                   },

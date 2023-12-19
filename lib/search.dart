@@ -63,50 +63,55 @@ class _SearchByState extends State<SearchBy> {
           leading: BackButton(
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Books by Tag'),
+          title: const Text('Books by Tag'),
         ),
-        body: isLoading ? const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16), // Adding some space between the CircularProgressIndicator and the text
-            Text('Loading data...'),
-          ],
-        ),
-      ):
-        ListView.builder(
-          itemCount: booksByTag.length,
-          itemBuilder: (context, index) {
-            // var tag = booksByTag.keys.elementAt(index);
-            var books = booksByTag["books"];
-            // print(books);
-            // var tag = books['fields']['title'];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Title: $title',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+        body: isLoading
+            ? const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                        height:
+                            16), // Adding some space between the CircularProgressIndicator and the text
+                    Text('Loading data...'),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Tag: $tags',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Column(
-                  children: _buildBooksList(books),
-                ),
-                Divider(),
-              ],
-            );
-          },
-        ),
+              )
+            : ListView.builder(
+                itemCount: booksByTag.length,
+                itemBuilder: (context, index) {
+                  // var tag = booksByTag.keys.elementAt(index);
+                  var books = booksByTag["books"];
+                  // print(books);
+                  // var tag = books['fields']['title'];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Title: $title',
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Tag: $tags',
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Column(
+                        children: _buildBooksList(books),
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }
@@ -122,15 +127,13 @@ class _SearchByState extends State<SearchBy> {
         title: Text(book.title!),
         onTap: () {
           // Handle book tap
-          print('Book tapped: ${book.title}');
-          print(book.coverUrl);
           Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return BookDetail(
-                              id: bookInfo['id'],
-                            );
-                          },
-                        ));
+            builder: (context) {
+              return BookDetail(
+                id: bookInfo['id'],
+              );
+            },
+          ));
         },
       );
     }).toList();

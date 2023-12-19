@@ -9,13 +9,13 @@ import 'package:tugas_uas/widget/drawer.dart';
 class ReadingForumDetailPage extends StatefulWidget {
   final Discussion discussion;
 
-  ReadingForumDetailPage({required this.discussion});
+  const ReadingForumDetailPage({super.key, required this.discussion});
 
   @override
-  _ReadingForumDetailPageState createState() => _ReadingForumDetailPageState();
+  ReadingForumDetailPageState createState() => ReadingForumDetailPageState();
 }
 
-class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
+class ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
   late List<Reply> replies = [];
 
   @override
@@ -34,22 +34,21 @@ class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
       if (response.statusCode == 200) {
         var data = json.decode(utf8.decode(response.bodyBytes));
 
-        List<Reply> list_replies = [];
+        List<Reply> listReplies = [];
         for (var d in data['replies']) {
           if (d != null) {
-            list_replies.add(Reply.fromJson(d));
+            listReplies.add(Reply.fromJson(d));
           }
         }
 
         setState(() {
-          replies = list_replies;
+          replies = listReplies;
         });
       } else {
         throw Exception('Failed to fetch replies');
       }
     } catch (e) {
-      print('Error fetching replies: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -68,7 +67,8 @@ class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Title: ${widget.discussion.title}',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(

@@ -106,7 +106,6 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        print("before making request");
                         final response = await request.postJson(
                           "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create-discussion-flutter/",
                           jsonEncode(<String, String>{
@@ -114,10 +113,9 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                             'content': _content,
                           }),
                         );
-                        print("after making request");
-                        print(response);
                         if (response['success'] ==
-                            'Discussion created successfully.') {
+                                'Discussion created successfully.' &&
+                            context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Discussion created successfully!"),
@@ -126,9 +124,9 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ReadingForumPage()),
+                                builder: (context) => const ReadingForumPage()),
                           );
-                        } else {
+                        } else if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content:

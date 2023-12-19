@@ -14,22 +14,22 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> {
   Future<List<Profile>> fetchProfile(CookieRequest request) async {
     var data = await request.get(
       'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/user/json/',
     );
 
-    List<Profile> list_profile = [];
+    List<Profile> listProfile = [];
     for (var d in data) {
       if (d != null) {
-        list_profile.add(Profile.fromJson(d));
+        listProfile.add(Profile.fromJson(d));
       }
     }
-    return list_profile;
+    return listProfile;
   }
 
   Future<Like> fetchLikes(CookieRequest request) async {
@@ -285,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               final response = await request.logout(
                                   "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
                               String message = response["message"];
-                              if (response['status']) {
+                              if (response['status'] && context.mounted) {
                                 String uname = response["username"];
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
@@ -297,10 +297,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   MaterialPageRoute(
                                       builder: (context) => const LoginApp()),
                                 );
-                              } else {
+                              } else if (context.mounted) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
-                                  content: Text("$message"),
+                                  content: Text(message),
                                 ));
                               }
                             },

@@ -50,7 +50,7 @@ class _GroupByState extends State<GroupBy> {
           leading: BackButton(
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text('Books by Tag'),
+          title: const Text('Books by Tag'),
         ),
         body: isLoading
             ? const Center(
@@ -77,14 +77,14 @@ class _GroupByState extends State<GroupBy> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Tag: $tag',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Column(
                         children: _buildBooksList(books),
                       ),
-                      Divider(),
+                      const Divider(),
                     ],
                   );
                 },
@@ -102,11 +102,6 @@ class _GroupByState extends State<GroupBy> {
         subtitle: Text('Author: ${book.author}'),
         title: Text(book.title!),
         onTap: () {
-          // Handle book tap
-
-          print('Book tapped: ${book.title}');
-          print(book.coverUrl);
-
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
               return BookDetail(

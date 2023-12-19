@@ -7,10 +7,10 @@ class CommentButton extends StatefulWidget {
   const CommentButton({Key? key, required this.id}) : super(key: key);
 
   @override
-  _CommentButtonState createState() => _CommentButtonState();
+  CommentButtonState createState() => CommentButtonState();
 }
 
-class _CommentButtonState extends State<CommentButton> {
+class CommentButtonState extends State<CommentButton> {
   @override
   Widget build(BuildContext context) {
     return Align(

@@ -18,7 +18,9 @@ class Book {
   List<Tag>? tags;
   List<Like>? likes;
   List<Comment>? comments;
-  List<int>? readingList;
+  List<dynamic>? readingList;
+  bool? liked;
+  bool? added;
 
   Book({
     this.id,
@@ -31,6 +33,8 @@ class Book {
     this.likes,
     this.comments,
     this.readingList,
+    this.liked,
+    this.added,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
@@ -52,7 +56,9 @@ class Book {
                 json["comments"]!.map((x) => Comment.fromJson(x))),
         readingList: json["reading_list"] == null
             ? []
-            : List<int>.from(json["reading_list"]!.map((x) => x)),
+            : List<dynamic>.from(json["reading_list"]!.map((x) => x)),
+        liked: json["liked"],
+        added: json["added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,6 +80,8 @@ class Book {
         "reading_list": readingList == null
             ? []
             : List<dynamic>.from(readingList!.map((x) => x)),
+        "liked": liked,
+        "added": added,
       };
 }
 

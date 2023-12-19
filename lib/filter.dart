@@ -10,8 +10,8 @@ class FilterPage extends StatefulWidget {
 }
 
 class _StatePageState extends State<FilterPage> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _tagsController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController tagsController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _StatePageState extends State<FilterPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TextField(
-                    controller: _titleController,
+                    controller: titleController,
                     decoration: const InputDecoration(
                       labelText: 'Title',
                       border: OutlineInputBorder(),
@@ -38,7 +38,7 @@ class _StatePageState extends State<FilterPage> {
                   ),
                   const SizedBox(height: 20.0),
                   TextField(
-                    controller: _tagsController,
+                    controller: tagsController,
                     decoration: const InputDecoration(
                       labelText: 'Tags',
                       border: OutlineInputBorder(),
@@ -47,9 +47,6 @@ class _StatePageState extends State<FilterPage> {
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () {
-                      // Process or save the title and tags data here
-
-                      print('Pressed Group by Tags');
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -61,12 +58,8 @@ class _StatePageState extends State<FilterPage> {
                   ElevatedButton(
                     onPressed: () {
                       // Process or save the title and tags data here
-                      title = _titleController.text;
-                      tags = _tagsController.text;
-                      // You can perform actions with the title and tags data
-                      // For example, print the values to the console
-                      print('Title: $title');
-                      print('Tags: $tags');
+                      title = titleController.text;
+                      tags = tagsController.text;
 
                       Navigator.push(
                           context,
@@ -84,8 +77,8 @@ class _StatePageState extends State<FilterPage> {
 
   @override
   void dispose() {
-    _titleController.dispose();
-    _tagsController.dispose();
+    titleController.dispose();
+    tagsController.dispose();
     super.dispose();
   }
 }

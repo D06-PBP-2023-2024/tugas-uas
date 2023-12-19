@@ -8,10 +8,10 @@ class CommentPage extends StatefulWidget {
   const CommentPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  _CommentPageState createState() => _CommentPageState();
+  CommentPageState createState() => CommentPageState();
 }
 
-class _CommentPageState extends State<CommentPage> {
+class CommentPageState extends State<CommentPage> {
   final _formKey = GlobalKey<FormState>();
   String _comment = "";
 
@@ -71,7 +71,7 @@ class _CommentPageState extends State<CommentPage> {
                         'comment': _comment,
                       },
                     );
-                    if (response['status'] == 'success') {
+                    if (response['status'] == 'success' && context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Comment created successfully!"),
@@ -81,7 +81,7 @@ class _CommentPageState extends State<CommentPage> {
                         context,
                         MaterialPageRoute(builder: (context) => const Home()),
                       );
-                    } else {
+                    } else if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("An error occurred, please try again."),
