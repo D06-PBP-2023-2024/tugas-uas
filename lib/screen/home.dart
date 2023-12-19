@@ -42,6 +42,7 @@ class _HomeState extends State<Home> {
             fontSize: 24,
           ),
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: const SideDrawer(),
       body: FutureBuilder(
