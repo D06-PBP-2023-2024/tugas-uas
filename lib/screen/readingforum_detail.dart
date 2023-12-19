@@ -80,9 +80,9 @@ Widget build(BuildContext context) {
             padding: const EdgeInsets.all(8.0),
             child: Text('By: ${widget.discussion.user}'),
           ),
-          if (replies.isEmpty)
-            const Center(child: CircularProgressIndicator())
-          else
+          // if (replies.isEmpty)
+          //   const Center(child: CircularProgressIndicator())
+          // else
             Expanded(
               child: ListView.builder(
                 itemCount: replies.length,
@@ -103,7 +103,7 @@ Widget build(BuildContext context) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ReplyForm(),
+                    builder: (context) =>  ReplyForm(id:widget.discussion.id),
                   ),
                 );
               },

@@ -7,8 +7,8 @@ import 'package:tugas_uas/screen/readingforum_page.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
 class ReplyForm extends StatefulWidget {
-  const ReplyForm({Key? key}) : super(key: key);
-
+  const ReplyForm({Key? key,required this.id}) : super(key: key);
+  final int id;
   @override
   State<ReplyForm> createState() => _ReplyFormState();
 }
@@ -78,12 +78,13 @@ class _ReplyFormState extends State<ReplyForm> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.postJson(
-                          'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create_reply_flutter/',
+                          'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create_reply_flutter/${widget.id}/',
                           jsonEncode(<String, String>{
                             'content': _content,
                           }),
                         );
-                        if (response['success'] == 'Discussion created successfully.') {
+                        if (response['success'] ==
+                            'Discussion created successfully.') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Reply created successfully!"),
@@ -91,7 +92,8 @@ class _ReplyFormState extends State<ReplyForm> {
                           );
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => ReadingForumPage()),
+                            MaterialPageRoute(
+                                builder: (context) => ReadingForumPage()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
