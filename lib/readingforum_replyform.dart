@@ -6,7 +6,7 @@ import 'package:tugas_uas/screen/readingforum_page.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
 class ReplyForm extends StatefulWidget {
-  const ReplyForm({Key? key,required this.id}) : super(key: key);
+  const ReplyForm({Key? key, required this.id}) : super(key: key);
   final int id;
   @override
   State<ReplyForm> createState() => _ReplyFormState();

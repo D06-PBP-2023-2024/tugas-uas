@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -115,7 +116,8 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                         );
                         print("after making request");
                         print(response);
-                        if (response['success'] == 'Discussion created successfully.') {
+                        if (response['success'] ==
+                            'Discussion created successfully.') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Discussion created successfully!"),
@@ -124,7 +126,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  ReadingForumPage()),
+                                builder: (context) => ReadingForumPage()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(

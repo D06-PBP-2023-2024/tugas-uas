@@ -136,6 +136,15 @@ class BookDetail extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: LikeWidget(id: id)),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommentButton(id: id)),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ReadingList(id: id)),
                         (request.loggedIn
                             ? Container(
                                 margin: const EdgeInsets.all(8),
@@ -165,13 +174,13 @@ class BookDetail extends StatelessWidget {
                                     )),
                               )
                             : const Text("Log in untuk menambahkan tag")),
-                        const Padding(
-                            padding: EdgeInsets.all(8.0), child: LikeWidget()),
-                        const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: CommentButton()),
-                        const Padding(
-                            padding: EdgeInsets.all(8.0), child: ReadingList()),
+                        // const Padding(
+                        //     padding: EdgeInsets.all(8.0), child: LikeWidget()),
+                        // const Padding(
+                        //     padding: EdgeInsets.all(8.0),
+                        //     child: CommentButton()),
+                        // const Padding(
+                        //     padding: EdgeInsets.all(8.0), child: ReadingList()),
                         Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: LikeWidget(id: id)),

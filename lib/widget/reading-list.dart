@@ -1,47 +1,57 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ReadingList extends StatefulWidget {
-  final Key? key;
+  final int id;
+
+  const ReadingList({Key? key, required this.id}) : super(key: key);
 
   @override
   _ReadingListState createState() => _ReadingListState();
-  const ReadingList({this.key}) : super(key: key);
 }
 
 class _ReadingListState extends State<ReadingList> {
-  List<Book> books = [];
+  bool isAdded = false;
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: books.length,
-      itemBuilder: (context, index) {
-        return BookCard(book: books[index]);
-      },
-    );
+  void _toggleLike() {
+    setState(() {
+      isAdded = !isAdded;
+    });
   }
-}
-
-class Book {
-  final String title;
-  final String author;
-
-  Book({required this.title, required this.author});
-}
-
-class BookCard extends StatelessWidget {
-  final Book book;
-
-  BookCard({required this.book});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(8.0),
-      child: ListTile(
-        title: Text(book.title),
-        subtitle: Text(book.author),
-        // Add more details or actions as needed
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton.icon(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.blue),
+          ),
+          onPressed: () async {
+            var response = await http.post(
+              Uri.parse(
+                  'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/readinglist-flutter/${widget.id}/'),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            );
+            if (response.statusCode == 200) {
+              _toggleLike();
+              return json.decode(response.body);
+            } else {
+              throw Exception(
+                  'Failed to like book. Status code: ${response.statusCode}');
+            }
+          },
+          icon: Icon(
+            isAdded ? Icons.bookmark : Icons.bookmark_border,
+            color: isAdded ? Colors.blue : Colors.black,
+          ), // Replace with the desired icon
+          label: const Text('Add to reading list'),
+        ),
       ),
     );
   }
