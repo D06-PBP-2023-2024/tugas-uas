@@ -95,7 +95,8 @@ class _ReplyFormState extends State<ReplyForm> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("An error occurred, please try again."),
+                              content:
+                                  Text("An error occurred, please try again."),
                             ),
                           );
                         }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:tugas_uas/filter.dart';
 import 'package:tugas_uas/screen/login.dart';
-import 'package:tugas_uas/screen/user_profile.dart';
+import 'package:tugas_uas/screen/profile.dart';
 import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/readingforum_page.dart';
 
@@ -41,13 +42,25 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.forum_outlined),
+            title: const Text("Reading Forum"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReadingForumPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.account_circle_outlined),
             title: const Text('Profile'),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Profile(),
+                    builder: (context) => const ProfilePage(),
                   ));
             },
           ),
@@ -68,20 +81,20 @@ class SideDrawer extends StatelessWidget {
             // Bagian redirection ke ShopFormPage
             onTap: () async {
               final response = await request.logout(
-                "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                  "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
               String message = response["message"];
               if (response['status']) {
                 String uname = response["username"];
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("$message See you again, $uname!"),
+                  content: Text("$message See you again, $uname!"),
                 ));
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("$message"),
+                  content: Text("$message"),
                 ));
               }
             },
@@ -93,6 +106,18 @@ class SideDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ReadingForumPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.search),
+            title: const Text("Filter Search"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FilterPage(),
                 ),
               );
             },

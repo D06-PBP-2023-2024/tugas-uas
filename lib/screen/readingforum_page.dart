@@ -22,7 +22,8 @@ class _ReadingForumPageState extends State<ReadingForumPage> {
   }
 
   Future<void> fetchDiscussions() async {
-    var url = Uri.parse('http://127.0.0.1:8000/reading_forum/discussion_list_json/');
+    var url = Uri.parse(
+        'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/discussion_list_json/');
 
     try {
       // Lakukan permintaan HTTP untuk mendapatkan daftar diskusi
@@ -59,7 +60,7 @@ class _ReadingForumPageState extends State<ReadingForumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discussion List'),
+        title: const Text('Discussion Detail'),
       ),
       drawer: const SideDrawer(),
       body: Padding(
@@ -72,11 +73,11 @@ class _ReadingForumPageState extends State<ReadingForumPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ReadingForumFormPage(),
+                    builder: (context) => const ReadingForumFormPage(),
                   ),
                 );
               },
-              child: Text('Create Discussion'),
+              child: const Text('Create Discussion'),
             ),
             const SizedBox(height: 16),
             if (discussions.isEmpty)
