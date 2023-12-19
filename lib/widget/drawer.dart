@@ -56,11 +56,21 @@ class SideDrawer extends StatelessWidget {
             leading: const Icon(Icons.account_circle_outlined),
             title: const Text('Profile'),
             onTap: () {
-              Navigator.push(
+              if (isLoggedIn) {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const ProfilePage(),
-                  ));
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                );
+              }
             },
           ),
           (!request.loggedIn
@@ -112,15 +122,29 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.search),
-            title: const Text("Filter Search"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FilterPage(),
-                ),
-              );
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            // Bagian redirection ke ShopFormPage
+            onTap: () async {
+              final response = await request.logout(
+                  "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+              String message = response["message"];
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message See you again, $uname!"),
+                ));
+                loggedInUsername = "";
+                isLoggedIn = false;
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message"),
+                ));
+              }
             },
           ),
         ],

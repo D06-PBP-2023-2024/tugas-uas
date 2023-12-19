@@ -23,8 +23,8 @@ class App extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        // home: LoginPage(),
-        home: BookDetail(id: 1),
+        home: const LoginPage(),
+        // home: BookDetail(id: 1),
       ),
     );
   }
