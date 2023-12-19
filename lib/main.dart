@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/login.dart';
-import 'package:tugas_uas/filter.dart';
 
 void main() {
   runApp(const App());
@@ -23,8 +21,13 @@ class App extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
+<<<<<<< HEAD
         // home: LoginPage(),
         home: Home(),
+=======
+        home: LoginPage(),
+        // home: Home(),
+>>>>>>> a914fb27e3d656b3b90d9c2dd50b9036341f4449
       ),
     );
   }
