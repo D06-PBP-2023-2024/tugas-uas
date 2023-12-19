@@ -56,11 +56,21 @@ class SideDrawer extends StatelessWidget {
             leading: const Icon(Icons.account_circle_outlined),
             title: const Text('Profile'),
             onTap: () {
-              Navigator.push(
+              if (isLoggedIn) {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const ProfilePage(),
-                  ));
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                );
+              }
             },
           ),
           (!request.loggedIn

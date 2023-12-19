@@ -6,6 +6,7 @@ import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/register.dart';
 
 String loggedInUsername = "";
+bool isLoggedIn = false;
 
 void main() {
   runApp(const LoginApp());
