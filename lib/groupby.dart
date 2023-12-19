@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tugas_uas/model/book.dart';
 import 'package:tugas_uas/screen/book_detail.dart';
 
 class GroupBy extends StatefulWidget {
@@ -21,8 +22,6 @@ class _GroupByState extends State<GroupBy> {
   }
 
   Future<void> fetchData() async {
-    
-
     // Replace URL with your API endpoint that returns the JSON data
     var apiUrl = 'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/tags-ajax/';
 
@@ -53,65 +52,68 @@ class _GroupByState extends State<GroupBy> {
           ),
           title: Text('Books by Tag'),
         ),
-        body: isLoading ? const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16), // Adding some space between the CircularProgressIndicator and the text
-            Text('Loading data...'),
-          ],
-        ),
-      ):
-        
-        ListView.builder(
-          itemCount: booksByTag.length,
-          itemBuilder: (context, index) {
-            var tag = booksByTag.keys.elementAt(index);
-            var books = booksByTag[tag]!;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Tag: $tag',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+        body: isLoading
+            ? const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                        height:
+                            16), // Adding some space between the CircularProgressIndicator and the text
+                    Text('Loading data...'),
+                  ],
                 ),
-                Column(
-                  children: _buildBooksList(books),
-                ),
-                Divider(),
-              ],
-            );
-          },
-        ),
+              )
+            : ListView.builder(
+                itemCount: booksByTag.length,
+                itemBuilder: (context, index) {
+                  var tag = booksByTag.keys.elementAt(index);
+                  var books = booksByTag[tag]!;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Tag: $tag',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Column(
+                        children: _buildBooksList(books),
+                      ),
+                      Divider(),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }
 
-  List<Widget> _buildBooksList(List<dynamic> booksInfo) {
+  List<Widget> _buildBooksList(List<dynamic> listTag) {
     // List<dynamic> books = json.decode(booksInfo);
-    return booksInfo.map((bookInfo) {
-      Map<String, dynamic> bookFields = bookInfo['fields'];
+    return listTag.map((bookInfo) {
+      Fields book = Fields.fromJson(bookInfo);
       return ListTile(
-        leading: Image.network(bookFields['cover_url']),
-        subtitle: Text('Author: ${bookFields['author']}'),
-        title: Text(bookFields['title']),
+        leading: Image.network(book.coverUrl!),
+        subtitle: Text('Author: ${book.author}'),
+        title: Text(book.title!),
         onTap: () {
           // Handle book tap
 
-          print('Book tapped: ${bookFields['title']}');
-          print(bookFields['cover_url']);
+          print('Book tapped: ${book.title}');
+          print(book.coverUrl);
 
           Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return BookDetail(
-                              id: bookInfo['id'],
-                            );
-                          },
-                        ));
+            builder: (context) {
+              return BookDetail(
+                id: bookInfo['id'],
+              );
+            },
+          ));
         },
       );
     }).toList();
