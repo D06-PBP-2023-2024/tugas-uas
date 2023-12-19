@@ -3,6 +3,9 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/login.dart';
 import 'package:tugas_uas/widget/drawer.dart';
+import 'package:tugas_uas/widget/like.dart';
+import 'package:tugas_uas/widget/comment.dart';
+import 'package:tugas_uas/widget/reading-list.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -58,7 +61,7 @@ class Profile extends StatelessWidget {
                                     context,
                                     listen: false);
                                 final response = await request.logout(
-                                    "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                                    "http://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
                                 String message = response["message"];
                                 if (response['status']) {
                                   String uname = response["username"];
@@ -95,7 +98,7 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Likes', style: TextStyle(fontSize: 18)),
-                      // TODO: add likessss
+                      LikeWidget(),
                     ],
                   ),
                 ),
@@ -109,7 +112,7 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Comments', style: TextStyle(fontSize: 18)),
-                      // TODO: Add commentssss
+                      CommentPage(),
                     ],
                   ),
                 ),
@@ -123,7 +126,7 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Reading List', style: TextStyle(fontSize: 18)),
-                      // TODO: Add reading listssss
+                      ReadingList(),
                     ],
                   ),
                 ),

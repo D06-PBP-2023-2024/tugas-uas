@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tugas_uas/model/book.dart';
 import 'package:tugas_uas/screen/book_detail.dart';
 
 String title = "";
@@ -113,15 +114,16 @@ class _SearchByState extends State<SearchBy> {
   List<Widget> _buildBooksList(List<dynamic> booksInfo) {
     // List<dynamic> books = json.decode(booksInfo);
     return booksInfo.map((bookInfo) {
-      Map<String, dynamic> bookFields = bookInfo['fields'];
+      Fields book = Fields.fromJson(bookInfo);
+
       return ListTile(
-        leading: Image.network(bookFields['cover_url']),
-        subtitle: Text('Author: ${bookFields['author']}'),
-        title: Text(bookFields['title']),
+        leading: Image.network(book.coverUrl!),
+        subtitle: Text('Author: ${book.author}'),
+        title: Text(book.title!),
         onTap: () {
           // Handle book tap
-          print('Book tapped: ${bookFields['title']}');
-          print(bookFields['cover_url']);
+          print('Book tapped: ${book.title}');
+          print(book.coverUrl);
           Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return BookDetail(

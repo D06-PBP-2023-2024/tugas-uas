@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CommentPage extends StatefulWidget {
+  final Key? key;
   @override
   _CommentPageState createState() => _CommentPageState();
+
+  const CommentPage({this.key}) : super(key: key);
 }
 
 class _CommentPageState extends State<CommentPage> {
@@ -12,7 +15,7 @@ class _CommentPageState extends State<CommentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fitur Komentar'),
+        title: const Text('Fitur Komentar'),
       ),
       body: Column(
         children: [
@@ -44,8 +47,9 @@ class _CommentPageState extends State<CommentPage> {
 
 class CommentInput extends StatefulWidget {
   final Function(String) onSubmit;
+  final Key? key;
 
-  CommentInput({required this.onSubmit});
+  const CommentInput({required this.onSubmit, this.key}) : super(key: key);
 
   @override
   _CommentInputState createState() => _CommentInputState();
@@ -61,13 +65,13 @@ class _CommentInputState extends State<CommentInput> {
         Expanded(
           child: TextField(
             controller: commentController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Tambahkan komentar...',
             ),
           ),
         ),
         IconButton(
-          icon: Icon(Icons.send),
+          icon: const Icon(Icons.send),
           onPressed: () {
             if (commentController.text.isNotEmpty) {
               widget.onSubmit(commentController.text);
