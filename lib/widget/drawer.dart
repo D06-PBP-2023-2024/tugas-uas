@@ -9,7 +9,6 @@ import 'package:tugas_uas/screen/readingforum_page.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
-
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -64,41 +63,43 @@ class SideDrawer extends StatelessWidget {
                   ));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.login),
-            title: const Text('Login'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginApp(),
-                  ));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
-            // Bagian redirection ke ShopFormPage
-            onTap: () async {
-              final response = await request.logout(
-                  "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
-              String message = response["message"];
-              if (response['status']) {
-                String uname = response["username"];
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("$message See you again, $uname!"),
-                ));
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("$message"),
-                ));
-              }
-            },
-          ),
+          (!request.loggedIn
+              ? ListTile(
+                  leading: const Icon(Icons.login),
+                  title: const Text('Login'),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginApp(),
+                        ));
+                  },
+                )
+              : ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  // Bagian redirection ke ShopFormPage
+                  onTap: () async {
+                    final response = await request.logout(
+                        "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                    String message = response["message"];
+                    if (response['status']) {
+                      String uname = response["username"];
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message See you again, $uname!"),
+                      ));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message"),
+                      ));
+                    }
+                  },
+                )),
           ListTile(
             title: const Text("Reading Forum"),
             onTap: () {
