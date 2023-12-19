@@ -13,9 +13,11 @@ class CommentButton extends StatefulWidget {
 class _CommentButtonState extends State<CommentButton> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ElevatedButton.icon(
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton.icon(
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -26,7 +28,7 @@ class _CommentButtonState extends State<CommentButton> {
           icon: const Icon(Icons.comment), // Replace with the desired icon
           label: const Text('Add Comment'),
         ),
-      ],
+      ),
     );
   }
 }

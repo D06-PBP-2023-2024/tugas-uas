@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class LikeWidget extends StatefulWidget {
   final int id;
@@ -10,33 +12,43 @@ class LikeWidget extends StatefulWidget {
 
 class _LikeWidgetState extends State<LikeWidget> {
   bool isLiked = false;
-  int likeCount = 0;
 
   void _toggleLike() {
     setState(() {
-      if (isLiked) {
-        likeCount -= 1;
-      } else {
-        likeCount += 1;
-      }
       isLiked = !isLiked;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton.icon(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.blue),
+          ),
+          onPressed: () async {
+            final response = await http.post(
+              Uri.parse(
+                  'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/like-flutter/${widget.id}/'),
+            );
+            if (response.statusCode == 200) {
+              _toggleLike();
+              return json.decode(response.body);
+            } else {
+              throw Exception(
+                  'Failed to like book. Status code: ${response.statusCode}');
+            }
+          },
           icon: Icon(
             isLiked ? Icons.favorite : Icons.favorite_border,
-            color: isLiked ? Colors.red : null,
-          ),
-          onPressed: _toggleLike,
+            color: isLiked ? Colors.red : Colors.black,
+          ), // Replace with the desired icon
+          label: const Text('Tap to like'),
         ),
-        Text('Likes'),
-      ],
+      ),
     );
   }
 }

@@ -28,8 +28,8 @@ class _CommentPageState extends State<CommentPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               decoration: InputDecoration(
-                hintText: "Content",
-                labelText: "Content",
+                hintText: "Comment",
+                labelText: "Comment",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 ),
@@ -65,7 +65,7 @@ class _CommentPageState extends State<CommentPage> {
                   if (_formKey.currentState!.validate()) {
                     print("before making request");
                     final response = await request.post(
-                      "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/main/comment-flutter/${widget.id}",
+                      "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/comment-flutter/${widget.id}/",
                       {
                         'comment': _comment,
                       },
