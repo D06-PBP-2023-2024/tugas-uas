@@ -1,10 +1,16 @@
 import "dart:convert";
 
 import "package:flutter/material.dart";
+import "package:pbp_django_auth/pbp_django_auth.dart";
 import "package:tugas_uas/model/book_detail.dart";
+import "package:tugas_uas/screen/tag_form.dart";
 import "package:tugas_uas/utils/titlecase.dart";
 import "package:tugas_uas/widget/drawer.dart";
+import "package:tugas_uas/widget/like.dart";
+import "package:tugas_uas/widget/comment.dart";
+import "package:tugas_uas/widget/reading-list.dart";
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class BookDetail extends StatelessWidget {
   const BookDetail({super.key, required this.id});
@@ -22,6 +28,7 @@ class BookDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -49,13 +56,15 @@ class BookDetail extends StatelessWidget {
               return ListView.builder(
                 itemCount: 1,
                 itemBuilder: (context, index) {
+                  snapshot.data!.tags!.sort((self, other) =>
+                      self.subject!.length - other.subject!.length);
                   return Card(
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.network(
-                            snapshot.data!.fields!.coverUrl!,
+                            snapshot.data!.coverUrl!,
                             width: 200,
                             height: 200,
                           ),
@@ -93,7 +102,7 @@ class BookDetail extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            snapshot.data!.fields!.title!.toTitleCase(),
+                            snapshot.data!.title!.toTitleCase(),
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -127,6 +136,44 @@ class BookDetail extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: LikeWidget(id: id)),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommentButton(id: id)),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ReadingList(id: id)),
+                        (request.loggedIn
+                            ? Container(
+                                margin: const EdgeInsets.all(8),
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              TagFormPage(id: id),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 29, 146, 43),
+                                      textStyle: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "Tambahkan Tag",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              )
+                            : const Text("Log in untuk menambahkan tag")),
                       ],
                     ),
                   );

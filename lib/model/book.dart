@@ -36,7 +36,7 @@ class Book {
 
 class Fields {
   String? title;
-  int? author;
+  dynamic author;
   String? coverUrl;
   int? downloadCount;
   String? content;
