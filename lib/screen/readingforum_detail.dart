@@ -4,17 +4,18 @@ import 'package:http/http.dart' as http;
 import 'package:tugas_uas/model/reading_forum.dart';
 import 'package:tugas_uas/model/reading_forum_detail.dart';
 import 'package:tugas_uas/readingforum_replyform.dart';
+import 'package:tugas_uas/widget/drawer.dart';
 
 class ReadingForumDetailPage extends StatefulWidget {
   final Discussion discussion;
 
-  const ReadingForumDetailPage({super.key, required this.discussion});
+  ReadingForumDetailPage({required this.discussion});
 
   @override
-  ReadingForumDetailPageState createState() => ReadingForumDetailPageState();
+  _ReadingForumDetailPageState createState() => _ReadingForumDetailPageState();
 }
 
-class ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
+class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
   late List<Reply> replies = [];
 
   @override
@@ -25,7 +26,7 @@ class ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
 
   Future<void> fetchReplies() async {
     var url = Uri.parse(
-        'http://127.0.0.1:8000/reading_forum/discussion_detail_json/${widget.discussion.id}');
+        'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/discussion_detail_json/${widget.discussion.id}');
 
     try {
       final response = await http.get(url);
@@ -56,11 +57,12 @@ class ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discussion Detail'),
+        title: const Text('Discussion Detail'),
       ),
-      body: SingleChildScrollView(
+      drawer: const SideDrawer(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -77,16 +79,22 @@ class ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
               padding: const EdgeInsets.all(8.0),
               child: Text('By: ${widget.discussion.user}'),
             ),
-            if (replies == null)
-              const Center(child: CircularProgressIndicator())
-            else
-              for (var reply in replies)
-                Card(
-                  child: ListTile(
-                    title: Text(reply.content),
-                    subtitle: Text('By: ${reply.user}'),
-                  ),
-                ),
+            // if (replies.isEmpty)
+            //   const Center(child: CircularProgressIndicator())
+            // else
+            Expanded(
+              child: ListView.builder(
+                itemCount: replies.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(replies[index].content),
+                      subtitle: Text('By: ${replies[index].user}'),
+                    ),
+                  );
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -94,11 +102,11 @@ class ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ReplyForm(),
+                      builder: (context) => ReplyForm(id: widget.discussion.id),
                     ),
                   );
                 },
-                child: Text('Reply'),
+                child: const Text('Reply'),
               ),
             ),
           ],

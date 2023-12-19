@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
+import 'package:tugas_uas/screen/readingforum_detail.dart';
+import 'package:tugas_uas/screen/readingforum_page.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
 class ReadingForumFormPage extends StatefulWidget {
@@ -105,15 +109,17 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         print("before making request");
-                        final response = await request.post(
-                          "http://localhost:8000/reading_forum/create-discussion-flutter/",
-                          {
+                        final response = await request.postJson(
+                          "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create-discussion-flutter/",
+                          jsonEncode(<String, String>{
                             'title': _title,
                             'content': _content,
-                          },
+                          }),
                         );
                         print("after making request");
-                        if (response['status'] == 'success') {
+                        print(response);
+                        if (response['success'] ==
+                            'Discussion created successfully.') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Discussion created successfully!"),
@@ -122,7 +128,7 @@ class _ReadingForumFormPageState extends State<ReadingForumFormPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Home()),
+                                builder: (context) => ReadingForumPage()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:tugas_uas/screen/home.dart';
+import 'package:tugas_uas/screen/readingforum_page.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
 class ReplyForm extends StatefulWidget {
@@ -77,12 +78,12 @@ class _ReplyFormState extends State<ReplyForm> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.postJson(
-                          'http://127.0.0.1:8000/reading_forum/create_reply_flutter/',
+                          'https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/reading_forum/create_reply_flutter/',
                           jsonEncode(<String, String>{
                             'content': _content,
                           }),
                         );
-                        if (response['status'] == 'success') {
+                        if (response['success'] == 'Discussion created successfully.') {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Reply created successfully!"),
@@ -90,7 +91,7 @@ class _ReplyFormState extends State<ReplyForm> {
                           );
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => Home()),
+                            MaterialPageRoute(builder: (context) => ReadingForumPage()),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
