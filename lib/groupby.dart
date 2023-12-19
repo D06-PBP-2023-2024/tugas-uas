@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tugas_uas/screen/book_detail.dart';
 
 class GroupBy extends StatefulWidget {
   const GroupBy({super.key});
@@ -52,7 +53,16 @@ class _GroupByState extends State<GroupBy> {
           ),
           title: Text('Books by Tag'),
         ),
-        body: isLoading ? const Center(child: CircularProgressIndicator()):
+        body: isLoading ? const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16), // Adding some space between the CircularProgressIndicator and the text
+            Text('Loading data...'),
+          ],
+        ),
+      ):
         
         ListView.builder(
           itemCount: booksByTag.length,
@@ -91,8 +101,17 @@ class _GroupByState extends State<GroupBy> {
         title: Text(bookFields['title']),
         onTap: () {
           // Handle book tap
+
           print('Book tapped: ${bookFields['title']}');
           print(bookFields['cover_url']);
+
+          Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return BookDetail(
+                              id: bookInfo['id'],
+                            );
+                          },
+                        ));
         },
       );
     }).toList();
