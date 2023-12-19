@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:tugas_uas/model/reading_forum.dart';
 import 'package:tugas_uas/model/reading_forum_detail.dart';
 import 'package:tugas_uas/readingforum_replyform.dart';
-import 'package:tugas_uas/readingforum_replyform.dart';
 import 'package:tugas_uas/widget/drawer.dart';
 
 class ReadingForumDetailPage extends StatefulWidget {
@@ -55,34 +54,34 @@ class _ReadingForumDetailPageState extends State<ReadingForumDetailPage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Discussion Detail'),
-    ),
-    drawer : const SideDrawer(),
-    body: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Title: ${widget.discussion.title}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Discussion Detail'),
+      ),
+      drawer: const SideDrawer(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Title: ${widget.discussion.title}',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Content: ${widget.discussion.content}'),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('By: ${widget.discussion.user}'),
-          ),
-          if (replies.isEmpty)
-            const Center(child: CircularProgressIndicator())
-          else
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Content: ${widget.discussion.content}'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('By: ${widget.discussion.user}'),
+            ),
+            // if (replies.isEmpty)
+            //   const Center(child: CircularProgressIndicator())
+            // else
             Expanded(
               child: ListView.builder(
                 itemCount: replies.length,
@@ -96,24 +95,23 @@ Widget build(BuildContext context) {
                 },
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ReplyForm(),
-                  ),
-                );
-              },
-              child: const Text('Reply'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReplyForm(id: widget.discussion.id),
+                    ),
+                  );
+                },
+                child: const Text('Reply'),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

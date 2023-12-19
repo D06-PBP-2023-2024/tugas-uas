@@ -21,6 +21,8 @@ class _CommentPageState extends State<CommentPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fitur Komentar'),
+        backgroundColor: Colors.blue,
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -63,14 +65,12 @@ class _CommentPageState extends State<CommentPage> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    print("before making request");
                     final response = await request.post(
                       "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/comment-flutter/${widget.id}/",
                       {
                         'comment': _comment,
                       },
                     );
-                    print("after making request");
                     if (response['status'] == 'success') {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
