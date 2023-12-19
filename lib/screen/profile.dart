@@ -262,27 +262,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(width: 10),
                       ElevatedButton(
                           onPressed: () async {
-                            final request = Provider.of<CookieRequest>(
-                                context,
-                                listen: false);
                             final response = await request.logout(
                                 "https://kindle-kids-d06-tk.pbp.cs.ui.ac.id/auth/logout/");
                             String message = response["message"];
                             if (response['status']) {
                               String uname = response["username"];
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content:
-                                    Text("$message Sampai jumpa, $uname."),
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("$message See you again, $uname!"),
                               ));
+                              loggedInUsername = "";
+                              isLoggedIn = false;
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginApp()),
+                                MaterialPageRoute(builder: (context) => const LoginPage()),
                               );
                             } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text("$message"),
                               ));
                             }

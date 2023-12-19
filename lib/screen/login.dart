@@ -6,6 +6,7 @@ import 'package:tugas_uas/screen/home.dart';
 import 'package:tugas_uas/screen/register.dart';
 
 String loggedInUsername = "";
+bool isLoggedIn = false;
 
 void main() {
   runApp(const LoginApp());
@@ -169,6 +170,7 @@ class LoginPageState extends State<LoginPage> {
                               String message = response['message'];
                               String uname = response['username'];
                               loggedInUsername = uname;
+                              isLoggedIn = true;
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
