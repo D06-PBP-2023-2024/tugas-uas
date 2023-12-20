@@ -33,7 +33,7 @@ class SideDrawer extends StatelessWidget {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const Home(),
@@ -114,7 +114,7 @@ class SideDrawer extends StatelessWidget {
             leading: const Icon(Icons.search),
             title: const Text('Search'),
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const FilterPage(),
